@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="300.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="238.0" prefWidth="400.0" style="-fx-background-color: white;">
+               <HBox.margin>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </HBox.margin>
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="5.0" radius="14.5" width="30.0">
+                     <color>
+                        <Color red="0.3176470696926117" green="0.3176470696926117" blue="0.3176470696926117" opacity="0.5" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <children>
+                  <JFXButton buttonType="RAISED" layoutX="176.0" layoutY="59.0" prefHeight="41.0" prefWidth="86.0" ripplerFill="WHITE" style="-fx-background-color: cyan;" text="Hello" />
+               </children>
+            </Pane>
+            <Pane layoutX="41.0" layoutY="41.0" prefWidth="360.0" style="-fx-background-color: white;">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
+                     <color>
+                        <Color red="0.3100000023841858" green="0.3100000023841858" blue="0.3100000023841858" opacity="0.5" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <children>
+                  <JFXCheckBox layoutX="65.0" layoutY="31.0" />
+                  <JFXCheckBox layoutX="65.0" layoutY="64.0" />
+                  <JFXSlider layoutX="37.0" layoutY="196.0" />
+               </children>
+               <HBox.margin>
+                  <Insets bottom="30.0" right="30.0" top="30.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane layoutX="41.0" layoutY="41.0" prefHeight="238.0" prefWidth="400.0" style="-fx-background-color: white;">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
+                     <color>
+                        <Color red="0.3176470696926117" green="0.3176470696926117" blue="0.3176470696926117" opacity="0.5" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="30.0" right="30.0" top="30.0" />
+               </HBox.margin>
+               <children>
+                  <JFXSlider layoutX="96.0" layoutY="114.0" prefHeight="15.0" prefWidth="224.0" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;" BorderPane.alignment="CENTER">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
+               <color>
+                  <Color red="0.3100000023841858" green="0.3100000023841858" blue="0.3100000023841858" opacity="0.5" />
+               </color>
+            </DropShadow>
+         </effect>
+         <BorderPane.margin>
+            <Insets left="30.0" right="30.0" top="30.0" />
+         </BorderPane.margin>
+      </Pane>
+   </center>
+</BorderPane>
