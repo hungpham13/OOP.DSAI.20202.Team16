@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -67,11 +67,11 @@
       </HBox>
    </bottom>
    <center>
-      <Pane style="-fx-background-color: lightgray;" BorderPane.alignment="CENTER">
+      <Pane style="-fx-background-color: ECEDEF;" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
                <color>
-                  <Color red="0.3100000023841858" green="0.3100000023841858" blue="0.3100000023841858" opacity="0.5" />
+                  <Color red="0.30980393290519714" green="0.30980393290519714" blue="0.30980393290519714" opacity="0.5" />
                </color>
             </DropShadow>
          </effect>
@@ -79,11 +79,20 @@
             <Insets left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin>
          <children>
-            <ImageView fitHeight="75.0" fitWidth="1722.0" layoutX="-33.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/surface.png" />
-               </image>
-            </ImageView>
+            <Pane fx:id="displayPane" prefHeight="290.0" prefWidth="1220.0">
+               <children>
+                  <ImageView fitHeight="75.0" fitWidth="1722.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/surface.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/actor.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </Pane>
    </center>
