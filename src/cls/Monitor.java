@@ -19,7 +19,7 @@ public class Monitor {
             if (actor.getValue() <= (normalForce*surface.getStaticFrictionCoef())) {
                 frictionForce.setValue(actor.getValue());
             } else {
-                frictionForce.setValue(normalForce*surface.getKineticFrictionCoef);
+                frictionForce.setValue(normalForce*surface.getKineticFrictionCoef());
             }
         } else if ((Cylinder) obj instanceof Cylinder) {
             if (actor.getValue() <= (3*normalForce*surface.getStaticFrictionCoef())) {
