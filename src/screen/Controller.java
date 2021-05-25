@@ -1,11 +1,11 @@
 package screen;
 
 import cls.Force;
-import cls.Monitor;
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
@@ -15,10 +15,6 @@ public class Controller {
 
     @FXML
     private Group road;
-    @FXML
-    private ImageView subroad1;
-    @FXML
-    private ImageView subroad2;
 
     @FXML
     private void initialize(){
@@ -45,16 +41,40 @@ public class Controller {
 
                 //move the road
                 double t = (currentNanoTime - startNanoTime[0])/ 1000000000.0;
-                //calculate new total applied force to object
-                Force totalForce = Main.monitor.getActorForce().plus(Main.monitor.getFrictionForce());
-                //apply total force to object
-                Main.monitor.getObj().applyForce(totalForce, (float) t);
-                //move road
-                road.setLayoutX(road.getLayoutX() - t*Main.monitor.getObj().getVelocity());
+                if (Main.monitor.isPlaying()) {
+                    //calculate new total applied force to object
+                    Force totalForce = Main.monitor.getActorForce().plus(Main.monitor.getFrictionForce());
+                    //apply total force to object
+                    Main.monitor.getObj().applyForce(totalForce, (float) t);
+                    //move road
+                    road.setLayoutX(road.getLayoutX() - t * Main.monitor.getObj().getVelocity());
+                }
 
                 startNanoTime[0] = currentNanoTime;
             }
         }.start();
+    }
 
+    @FXML
+    private JFXButton playBtn;
+    @FXML
+    private JFXButton pauseBtn;
+    @FXML
+    public void playPressedBtn(ActionEvent e){
+        Main.monitor.cont();
+        playBtn.setDisable(true);
+        pauseBtn.setDisable(false);
+    }
+    @FXML
+    public void pausePressedBtn(ActionEvent e){
+        Main.monitor.pause();
+        pauseBtn.setDisable(true);
+        playBtn.setDisable(false);
+    }
+    @FXML
+    public void resetPressedBtn(ActionEvent e){
+        Main.monitor.reset();
+        playBtn.setDisable(true);
+        pauseBtn.setDisable(false);
     }
 }

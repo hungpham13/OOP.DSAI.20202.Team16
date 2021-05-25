@@ -13,6 +13,10 @@ public class Monitor {
         this.actor = actor;
     }
 
+    public boolean isPlaying() {
+        return playing;
+    }
+
     public boolean isEmpty(){
         return obj == null;
     }
@@ -20,7 +24,7 @@ public class Monitor {
         if (isEmpty()){
             obj = newObj;
         } else {
-            throw new Exception("Object has been already exist");
+            throw new Exception("Object is already exist");
         }
     }
     public Object getObj(){
@@ -32,13 +36,13 @@ public class Monitor {
     public Force getFrictionForce(){
         Force frictionForce = new Force();
         float normalForce = 10*obj.getMass();
-        if ((Cube) obj instanceof Cube ) {
+        if (obj instanceof Cube ) {
             if (actor.getValue() <= (normalForce*surface.getStaticFrictionCoef())) {
                 frictionForce.setValue(actor.getValue());
             } else {
                 frictionForce.setValue(normalForce*surface.getKineticFrictionCoef());
             }
-        } else if ((Cylinder) obj instanceof Cylinder) {
+        } else if (obj instanceof Cylinder) {
             if (actor.getValue() <= (3*normalForce*surface.getStaticFrictionCoef())) {
                 frictionForce.setValue(actor.getValue()/3);
             } else {
@@ -54,6 +58,8 @@ public class Monitor {
         playing = true;
     }
     public void reset(){
-
+        actor.setValue(0);
+        obj.setVelocity(0);
+        playing = true;
     }
 }
