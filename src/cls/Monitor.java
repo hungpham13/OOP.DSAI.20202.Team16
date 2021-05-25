@@ -12,6 +12,9 @@ public class Monitor {
     public void setObj(Object newObj){
         obj = newObj;
     }
+    public Object getObj(){
+        return obj;
+    }
     public Force getFrictionForce(){
         Force frictionForce = new Force();
         float normalForce = 10*obj.getMass();
@@ -19,7 +22,7 @@ public class Monitor {
             if (actor.getValue() <= (normalForce*surface.getStaticFrictionCoef())) {
                 frictionForce.setValue(actor.getValue());
             } else {
-                frictionForce.setValue(normalForce*surface.getKineticFrictionCoef);
+                frictionForce.setValue(normalForce*surface.getKineticFrictionCoef());
             }
         } else if ((Cylinder) obj instanceof Cylinder) {
             if (actor.getValue() <= (3*normalForce*surface.getStaticFrictionCoef())) {
@@ -31,12 +34,12 @@ public class Monitor {
         return frictionForce;
     }
     public void pause(){
-        //todo
+        playing = false;
     }
     public void cont(){
-        //todo
+        playing = true;
     }
     public void reset(){
-        //todo
+
     }
 }

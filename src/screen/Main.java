@@ -1,5 +1,6 @@
 package screen;
 
+import cls.Monitor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class Main extends Application {
+    public static Monitor monitor;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
