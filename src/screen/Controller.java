@@ -4,6 +4,7 @@ import cls.Force;
 import cls.Monitor;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -13,7 +14,11 @@ public class Controller {
     private Pane displayPane;
 
     @FXML
-    private ImageView road;
+    private Group road;
+    @FXML
+    private ImageView subroad1;
+    @FXML
+    private ImageView subroad2;
 
     @FXML
     private void initialize(){
@@ -31,16 +36,23 @@ public class Controller {
         new AnimationTimer(){
             @Override
             public void handle(long currentNanoTime) {
+                //create infinity road
+                if (road.getLayoutX() >= -30) {
+                    road.setLayoutX(road.getLayoutX()-1690);
+                } else if (road.getLayoutX() <= displayPane.getWidth()+30-(1690+1722)) {
+                    road.setLayoutX(road.getLayoutX()+1690);
+                }
+
+                //move the road
                 double t = (currentNanoTime - startNanoTime[0])/ 1000000000.0;
                 //calculate new total applied force to object
                 Force totalForce = Main.monitor.getActorForce().plus(Main.monitor.getFrictionForce());
                 //apply total force to object
                 Main.monitor.getObj().applyForce(totalForce, (float) t);
                 //move road
-                road.setX(road.getX() - t*Main.monitor.getObj().getVelocity());
+                road.setLayoutX(road.getLayoutX() - t*Main.monitor.getObj().getVelocity());
 
                 startNanoTime[0] = currentNanoTime;
-
             }
         }.start();
 

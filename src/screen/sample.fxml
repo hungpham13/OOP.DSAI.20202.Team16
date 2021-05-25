@@ -3,7 +3,9 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -28,7 +30,18 @@
                   </DropShadow>
                </effect>
                <children>
-                  <JFXButton buttonType="RAISED" layoutX="176.0" layoutY="59.0" prefHeight="41.0" prefWidth="86.0" ripplerFill="WHITE" style="-fx-background-color: cyan;" text="Hello" />
+                  <ImageView blendMode="OVERLAY" fitHeight="54.0" fitWidth="52.0" layoutX="36.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/play.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton buttonType="RAISED" layoutX="32.0" layoutY="29.0" prefHeight="60.0" prefWidth="60.0" ripplerFill="WHITE" style="-fx-background-color: lightgreen; radibackground-radius: 100;" viewOrder="2.0" />
+                  <ImageView blendMode="OVERLAY" fitHeight="54.0" fitWidth="52.0" layoutX="144.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/pause.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton buttonType="RAISED" layoutX="140.0" layoutY="29.0" prefHeight="60.0" prefWidth="60.0" ripplerFill="WHITE" style="-fx-background-color: firebrick; radibackground-radius: 100;" viewOrder="2.0" />
                </children>
             </Pane>
             <Pane layoutX="41.0" layoutY="41.0" prefWidth="360.0" style="-fx-background-color: white;">
@@ -43,6 +56,7 @@
                   <JFXCheckBox layoutX="65.0" layoutY="31.0" />
                   <JFXCheckBox layoutX="65.0" layoutY="64.0" />
                   <JFXSlider layoutX="37.0" layoutY="196.0" />
+                  <JFXToggleButton layoutX="35.0" layoutY="95.0" />
                </children>
                <HBox.margin>
                   <Insets bottom="30.0" right="30.0" top="30.0" />
@@ -81,11 +95,20 @@
          <children>
             <Pane fx:id="displayPane" prefHeight="290.0" prefWidth="1220.0">
                <children>
-                  <ImageView fx:id="road" fitHeight="75.0" fitWidth="1722.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/surface.png" />
-                     </image>
-                  </ImageView>
+                  <Group fx:id="road" layoutX="-26.0" layoutY="212.0">
+                     <children>
+                        <ImageView fx:id="subroad1" fitHeight="75.0" fitWidth="1722.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/surface.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="subroad2" fitHeight="75.0" fitWidth="1722.0" layoutX="1690.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/surface.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/actor.png" />

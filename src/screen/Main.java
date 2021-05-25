@@ -25,7 +25,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        monitor = new Monitor(new Cube(12,3), new Surface(0.2f, 0.3f), new Force(20));
+        monitor = new Monitor(new Cube(10,3), new Surface(0.2f, 0.3f), new Force(-20));
         launch(args);
     }
 }
