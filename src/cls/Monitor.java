@@ -2,18 +2,32 @@ package cls;
 
 public class Monitor {
     private Object obj = null;
-    private boolean playing;
+    private boolean playing = true;
     private Surface surface;
     private Force actor;
+
+
+    public Monitor(Object obj, Surface surface, Force actor) {
+        this.obj = obj;
+        this.surface = surface;
+        this.actor = actor;
+    }
 
     public boolean isEmpty(){
         return obj == null;
     }
-    public void setObj(Object newObj){
-        obj = newObj;
+    public void setObj(Object newObj) throws Exception {
+        if (isEmpty()){
+            obj = newObj;
+        } else {
+            throw new Exception("Object has been already exist");
+        }
     }
     public Object getObj(){
         return obj;
+    }
+    public Force getActorForce(){
+        return actor;
     }
     public Force getFrictionForce(){
         Force frictionForce = new Force();

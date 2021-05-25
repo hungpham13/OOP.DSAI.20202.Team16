@@ -4,6 +4,11 @@ public class Surface {
     private float staticCoef;
     private float kineticCoef;
 
+    public Surface(float staticCoef, float kineticCoef) {
+        this.staticCoef = staticCoef;
+        this.kineticCoef = kineticCoef;
+    }
+
 
     public float getStaticFrictionCoef() {
         return staticCoef;

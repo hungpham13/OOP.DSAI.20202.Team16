@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="300.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="238.0" prefWidth="400.0" style="-fx-background-color: white;">
                <HBox.margin>
@@ -54,24 +60,40 @@
                   <Insets bottom="30.0" right="30.0" top="30.0" />
                </HBox.margin>
                <children>
-                  <JFXSlider layoutX="96.0" layoutY="114.0" prefHeight="15.0" prefWidth="224.0" />
+                  <JFXSlider layoutX="88.0" layoutY="246.0" prefHeight="15.0" prefWidth="224.0" />
                </children>
             </Pane>
          </children>
       </HBox>
    </bottom>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;" BorderPane.alignment="CENTER">
+      <Pane style="-fx-background-color: ECEDEF;" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
                <color>
-                  <Color red="0.3100000023841858" green="0.3100000023841858" blue="0.3100000023841858" opacity="0.5" />
+                  <Color red="0.30980393290519714" green="0.30980393290519714" blue="0.30980393290519714" opacity="0.5" />
                </color>
             </DropShadow>
          </effect>
          <BorderPane.margin>
             <Insets left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin>
+         <children>
+            <Pane fx:id="displayPane" prefHeight="290.0" prefWidth="1220.0">
+               <children>
+                  <ImageView fx:id="road" fitHeight="75.0" fitWidth="1722.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/surface.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/actor.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
       </Pane>
    </center>
 </BorderPane>

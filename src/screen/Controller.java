@@ -1,5 +1,7 @@
 package screen;
 
+import cls.Force;
+import cls.Monitor;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -24,17 +26,23 @@ public class Controller {
         });
 
         //animate surface
-        long startNanoTime = System.nanoTime();
-        double startX = road.getX();
+        final long[] startNanoTime = {System.nanoTime()};
 
         new AnimationTimer(){
             @Override
             public void handle(long currentNanoTime) {
-                double t = (currentNanoTime - startNanoTime)/ 1000000000.0;
-                road.setX(road.getX() - Main.monitor.getObj().getVelocity());
+                double t = (currentNanoTime - startNanoTime[0])/ 1000000000.0;
+                //calculate new total applied force to object
+                Force totalForce = Main.monitor.getActorForce().plus(Main.monitor.getFrictionForce());
+                //apply total force to object
+                Main.monitor.getObj().applyForce(totalForce, (float) t);
+                //move road
+                road.setX(road.getX() - t*Main.monitor.getObj().getVelocity());
+
+                startNanoTime[0] = currentNanoTime;
 
             }
-        };
+        }.start();
 
     }
 }
