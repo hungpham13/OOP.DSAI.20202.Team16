@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="300.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="238.0" prefWidth="400.0" style="-fx-background-color: white;">
                <HBox.margin>
@@ -61,7 +67,7 @@
       </HBox>
    </bottom>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;" BorderPane.alignment="CENTER">
+      <Pane style="-fx-background-color: lightgray;" BorderPane.alignment="CENTER">
          <effect>
             <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
                <color>
@@ -72,6 +78,13 @@
          <BorderPane.margin>
             <Insets left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin>
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="1722.0" layoutX="-33.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/home/hung/IdeaProjects/OOP.DSAI.20202.Team16/resources/surface.png" />
+               </image>
+            </ImageView>
+         </children>
       </Pane>
    </center>
 </BorderPane>
