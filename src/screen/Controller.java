@@ -2,14 +2,19 @@ package screen;
 
 import cls.Force;
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.Interpolator;
+import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.Objects;
 
@@ -21,7 +26,27 @@ public class Controller {
     private Group road;
 
     @FXML
+    private ImageView standActor;
+    @FXML
     private ImageView actor;
+    private final Transition actorTransition = new Transition(){
+        final int width = 118;
+        final int height = 70;
+        final int offsetX = 2;
+        final int offsetY = 15;
+        {
+            setCycleDuration(Duration.millis(250));
+            setCycleCount(Animation.INDEFINITE);
+            setInterpolator(Interpolator.LINEAR);
+        }
+        @Override
+        protected void interpolate(double k) {
+            int index = Math.min((int) Math.floor(k*2),1);
+            int x = (index%2)*width + offsetX;
+            int y = (index/2)*height + offsetY;
+            actor.setViewport(new Rectangle2D(x,y,width,height));
+        }
+    };
     @FXML
     private ImageView subroad1;
     @FXML
@@ -29,11 +54,12 @@ public class Controller {
 
     @FXML
     private void initialize(){
-        //set resources
+        //setup resources
         actor.setImage(new Image(getClass().getResourceAsStream("/resources/actor.png")));
+        standActor.setImage(new Image(getClass().getResourceAsStream("/resources/standActor.png")));
         subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
         subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-        //playBtn.setBackground(new Background(new BackgroundImage(new Image(getClass().getResourceAsStream("/resources/play.png")))));
+        //play
         playPressedBtn(new ActionEvent());
         //clipping pane
         Rectangle outputClip = new Rectangle();
@@ -43,9 +69,12 @@ public class Controller {
             outputClip.setHeight(newValue.getHeight());
         });
 
+
+        //animate actor
+        actorTransition.play();
+
         //animate surface
         final long[] startNanoTime = {System.nanoTime()};
-
         new AnimationTimer(){
             @Override
             public void handle(long currentNanoTime) {
@@ -79,12 +108,14 @@ public class Controller {
     @FXML
     public void playPressedBtn(ActionEvent e){
         Main.monitor.cont();
+        actorTransition.play();
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
     @FXML
     public void pausePressedBtn(ActionEvent e){
         Main.monitor.pause();
+        actorTransition.stop();
         pauseBtn.setDisable(true);
         playBtn.setDisable(false);
     }
