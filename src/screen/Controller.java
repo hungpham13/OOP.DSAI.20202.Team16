@@ -6,8 +6,12 @@ import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+
+import java.util.Objects;
 
 public class Controller {
     @FXML
@@ -17,7 +21,20 @@ public class Controller {
     private Group road;
 
     @FXML
+    private ImageView actor;
+    @FXML
+    private ImageView subroad1;
+    @FXML
+    private ImageView subroad2;
+
+    @FXML
     private void initialize(){
+        //set resources
+        actor.setImage(new Image(getClass().getResourceAsStream("/resources/actor.png")));
+        subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
+        subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
+        //playBtn.setBackground(new Background(new BackgroundImage(new Image(getClass().getResourceAsStream("/resources/play.png")))));
+        playPressedBtn(new ActionEvent());
         //clipping pane
         Rectangle outputClip = new Rectangle();
         displayPane.setClip(outputClip);
@@ -46,7 +63,7 @@ public class Controller {
                     Force totalForce = Main.monitor.getActorForce().plus(Main.monitor.getFrictionForce());
                     //apply total force to object
                     Main.monitor.getObj().applyForce(totalForce, (float) t);
-                    //move road
+                    //move road based on new velocity of object
                     road.setLayoutX(road.getLayoutX() - t * Main.monitor.getObj().getVelocity());
                 }
 
