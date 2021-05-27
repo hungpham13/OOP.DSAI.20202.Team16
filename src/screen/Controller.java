@@ -2,20 +2,25 @@ package screen;
 
 import cls.Force;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSlider;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.scene.control.*;
 
+import javax.swing.*;
 import java.util.Objects;
 
 public class Controller {
@@ -29,6 +34,7 @@ public class Controller {
     private ImageView standActor;
     @FXML
     private ImageView actor;
+
     private final Transition actorTransition = new Transition(){
         final int width = 118;
         final int height = 70;
@@ -52,6 +58,34 @@ public class Controller {
     @FXML
     private ImageView subroad2;
 
+    // Slider to change edge (radius) size of object
+    @FXML
+    private JFXSlider sliderSize;
+
+    // Text Input to change mass of object
+    @FXML
+    private TextField tfMass;
+
+    // Image of Cube
+    @FXML
+    private ImageView imageCube;
+
+    // Image of Cylinder
+    @FXML
+    private ImageView imageCylinder;
+
+    // Drag and drop On-road pane
+    @FXML
+    private StackPane stackPaneOnRoad;
+
+    // Drag and drop Cylinder pane
+    @FXML
+    private StackPane stackPaneCylinder;
+
+    // Drag and drop Cube pane
+    @FXML
+    private StackPane stackPaneCube;
+
     @FXML
     private void initialize(){
         //setup resources
@@ -68,6 +102,67 @@ public class Controller {
             outputClip.setWidth(newValue.getWidth());
             outputClip.setHeight(newValue.getHeight());
         });
+
+
+        // Lap's work
+        // Add event handler for drag and drop
+        stackPaneOnRoad.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragOver(dragEvent);
+            }
+        });
+        stackPaneCylinder.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragOver(dragEvent);
+            }
+        });
+        stackPaneCube.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragOver(dragEvent);
+            }
+        });
+        stackPaneOnRoad.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragDropped(dragEvent);
+            }
+        });
+        stackPaneCylinder.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragDropped(dragEvent);
+            }
+        });
+        stackPaneCube.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragDropped(dragEvent);
+            }
+        });
+        stackPaneOnRoad.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragExited(dragEvent);
+            }
+        });
+        stackPaneCylinder.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragExited(dragEvent);
+            }
+        });
+        stackPaneCube.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                mouseDragExited(dragEvent);
+            }
+        });
+
+
+
 
 
         //animate actor
@@ -124,5 +219,17 @@ public class Controller {
         Main.monitor.reset();
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
+    }
+
+    void mouseDragExited(DragEvent e) {
+        System.out.println("DragExited");
+    }
+
+    void mouseDragOver(DragEvent e) {
+        System.out.println("DragOver");
+    }
+
+    void mouseDragDropped(DragEvent e) {
+        System.out.println("DragDropped");
     }
 }
