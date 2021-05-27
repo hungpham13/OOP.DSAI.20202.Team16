@@ -7,9 +7,6 @@ import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
@@ -24,24 +21,18 @@ public class Controller {
 
     @FXML
     private Group road;
+    @FXML
+    private Group background;
 
     @FXML
     private ImageView standActor;
     @FXML
-    private ImageView actor;
-
+    private ImageView leftActor;
     @FXML
-    private ImageView subroad1;
-    @FXML
-    private ImageView subroad2;
+    private ImageView rightActor;
 
     @FXML
     private void initialize() {
-        //setup resources
-        actor.setImage(new Image(getClass().getResourceAsStream("/resources/actor.png")));
-        standActor.setImage(new Image(getClass().getResourceAsStream("/resources/standActor.png")));
-        subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-        subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
 
         //play
         playPressedBtn(new ActionEvent());
@@ -55,23 +46,33 @@ public class Controller {
         });
 
         //animate actor
-        SpriteTransition actorTransition = new SpriteTransition(actor,250,2,118,70,2,15,Main.monitor);
-        actorTransition.play();
+        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,250,2,118,70,2,15,Main.monitor);
+        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,250,2,118,70,3,15,Main.monitor);
+        rightActorTransition.play();
+        leftActorTransition.play();
 
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
             Main.monitor.getActorForce().setValue(t1.floatValue());
             if (t1.intValue() == 0){
                 standActor.setVisible(true);
-                actor.setVisible(false);
-            } else if (t1.intValue() != 0){
-                actor.setVisible(true);
+                leftActor.setVisible(false);
+                rightActor.setVisible(false);
+            } else if (t1.intValue() > 0){
+                leftActor.setVisible(true);
+                standActor.setVisible(false);
+                rightActor.setVisible(false);
+            } else if (t1.intValue() < 0){
+                rightActor.setVisible(true);
+                leftActor.setVisible(false);
                 standActor.setVisible(false);
             }
         });
 
         //animate surface
-        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor);
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, 1F);
+        SurfaceAnimation backgroundAnimation = new SurfaceAnimation(background, displayPane, Main.monitor, 0.1F);
+        backgroundAnimation.start();
         surfaceAnimation.start();
     }
 
@@ -97,7 +98,7 @@ public class Controller {
     @FXML
     public void resetPressedBtn(ActionEvent e) {
         Main.monitor.reset();
-        //forceSlider.setValue(0);
+        forceSlider.setValue(0);
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
