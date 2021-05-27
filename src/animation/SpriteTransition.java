@@ -15,9 +15,9 @@ public class SpriteTransition extends Transition {
     private final int offsetX;
     private final int offsetY;
     private final int count;
-    private Monitor monitor;
+    private final Monitor monitor;
 
-    public SpriteTransition(ImageView actor, float duration, int count, int width, int height, int offsetX,
+    public SpriteTransition(ImageView actor, int duration, int count, int width, int height, int offsetX,
                             int offsetY, Monitor monitor){
         this.actor = actor;
         this.count = count;

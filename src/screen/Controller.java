@@ -79,8 +79,8 @@ public class Controller {
 
 
         //animate actor
-        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,250,2,118,70,2,15,Main.monitor);
-        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,250,2,118,70,3,15,Main.monitor);
+        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,200,2,118,70,2,15,Main.monitor);
+        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,200,2,118,70,3,15,Main.monitor);
         rightActorTransition.play();
         leftActorTransition.play();
 
@@ -103,9 +103,7 @@ public class Controller {
         });
 
         //animate surface
-        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, 1F);
-        SurfaceAnimation backgroundAnimation = new SurfaceAnimation(background, displayPane, Main.monitor, 0.1F);
-        backgroundAnimation.start();
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background,0.1F);
         surfaceAnimation.start();
     }
 
