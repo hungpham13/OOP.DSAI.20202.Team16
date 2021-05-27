@@ -92,7 +92,7 @@
                   <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" viewOrder="2.0" />
                   <BorderPane prefHeight="200.0" prefWidth="200.0" />
                   <ImageView fx:id="rightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="416.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="leftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="216.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="leftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="216.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="totalForceArrow" fitHeight="50.0" fitWidth="200.0" layoutX="415.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>

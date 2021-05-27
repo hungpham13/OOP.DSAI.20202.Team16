@@ -38,16 +38,18 @@ public class Monitor {
         float normalForce = 10*obj.getMass();
         if (obj instanceof Cube ) {
             if (actor.getValue() <= (normalForce*surface.getStaticFrictionCoef())) {
-                frictionForce.setValue(actor.getValue());
+                if (obj.getVelocity() == 0) {frictionForce.setValue(- actor.getValue());
+            } else {frictionForce.setValue(- normalForce*surface.getKineticFrictionCoef());
+                }
             } else {
-                frictionForce.setValue(normalForce*surface.getKineticFrictionCoef());
+                frictionForce.setValue(- normalForce*surface.getKineticFrictionCoef());
             }
         } else if (obj instanceof Cylinder) {
             if (actor.getValue() <= (3*normalForce*surface.getStaticFrictionCoef())) {
-                frictionForce.setValue(actor.getValue()/3);
-            } else {
-                frictionForce.setValue(normalForce*surface.getKineticFrictionCoef());
-            }
+                if (obj.getVelocity() == 0) {frictionForce.setValue(- actor.getValue()/3);}
+            } else {frictionForce.setValue(- normalForce*surface.getKineticFrictionCoef());}
+        } else {
+            frictionForce.setValue(-normalForce * surface.getKineticFrictionCoef());
         }
         return frictionForce;
     }

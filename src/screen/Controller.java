@@ -37,6 +37,15 @@ public class Controller {
     private ImageView subroad2;
 
     @FXML
+    private ImageView rightArrow;
+
+    @FXML
+    private ImageView leftArrow;
+
+    @FXML
+    private ImageView totalForceArrow;
+
+    @FXML
     private void initialize() {
         //setup resources
         actor.setImage(new Image(getClass().getResourceAsStream("/resources/actor.png")));
