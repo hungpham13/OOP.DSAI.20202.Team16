@@ -1,6 +1,7 @@
 package screen;
 
 import cls.Force;
+import cls.Object;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.animation.Animation;
@@ -68,10 +69,6 @@ public class Controller {
         standActor.setImage(new Image(getClass().getResourceAsStream("/resources/standActor.png")));
         subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
         subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-        forceSlider.setShowTickMarks(true);
-        forceSlider.setShowTickLabels(true);
-        forceSlider.minProperty().setValue(-100.0);
-        forceSlider.maxProperty().setValue(100.0);
 
         //play
         playPressedBtn(new ActionEvent());
@@ -86,7 +83,12 @@ public class Controller {
 
         //animate actor
         actorTransition.play();
-
+        forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                Main.monitor.getActorForce().setValue( t1.floatValue());
+            }
+        });
         //animate surface
         final long[] startNanoTime = {System.nanoTime()};
         new AnimationTimer() {
@@ -102,20 +104,16 @@ public class Controller {
                 //move the road
                 double t = (currentNanoTime - startNanoTime[0]) / 1000000000.0;
                 if (Main.monitor.isPlaying()) {
-                    //calculate new total applied force to object
-                    forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-                        @Override
-                        public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                            Force actorForce = Main.monitor.getActorForce();
-                            actorForce.setValue((forceSlider.valueProperty().floatValue()*(float)0.5));
-                            Force totalForce = actorForce.plus(Main.monitor.getFrictionForce());
-                            Main.monitor.getObj().applyForce(totalForce, (float) t);
-                            //road.setLayoutX(road.getLayoutX() - t * Main.monitor.getObj().getVelocity());
-                        }
-                    });
-                    //apply total force to object
+                    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
+                    //  @Override
+                    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                    Force actorForce = Main.monitor.getActorForce();
+                    //actorForce.setValue((float) t1);
+                    Force totalForce = actorForce.plus(Main.monitor.getFrictionForce());
+                    Main.monitor.getObj().applyForce(totalForce, (float) t);
+              //  }
+            //});
                     //Main.monitor.getObj().applyForce(totalForce, (float) t);
-                    //move road based on new velocity of object
                     road.setLayoutX(road.getLayoutX() - t * Main.monitor.getObj().getVelocity());
 
                 }
@@ -161,4 +159,5 @@ public class Controller {
     //    }
     //  });
     }
+
 }

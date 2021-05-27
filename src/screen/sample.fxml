@@ -39,7 +39,7 @@
                </effect>
                <children>
                   <JFXCheckBox layoutX="65.0" layoutY="64.0" />
-                  <JFXSlider fx:id="forceSlider" layoutX="37.0" layoutY="196.0" onDragDropped="#setForceOnDrop" />
+                  <JFXSlider fx:id="forceSlider" layoutX="67.0" layoutY="192.0" min="-100.0" onDragDropped="#setForceOnDrop" prefHeight="37.0" prefWidth="222.0" showTickLabels="true" showTickMarks="true" />
                   <JFXToggleButton layoutX="35.0" layoutY="95.0" />
                </children>
                <HBox.margin>
