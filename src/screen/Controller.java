@@ -37,6 +37,7 @@ public class Controller {
     private ImageView standActor;
     @FXML
     private ImageView actor;
+
     private final Transition actorTransition = new Transition() {
         final int width = 118;
         final int height = 70;
@@ -59,8 +60,18 @@ public class Controller {
     };
     @FXML
     private ImageView subroad1;
+
     @FXML
     private ImageView subroad2;
+
+    @FXML
+    private ImageView rightArrow;
+
+    @FXML
+    private ImageView leftArrow;
+
+    @FXML
+    private ImageView totalForceArrow;
 
     @FXML
     private void initialize() {
@@ -80,9 +91,11 @@ public class Controller {
             outputClip.setHeight(newValue.getHeight());
         });
 
+        //actorforce size listener
 
         //animate actor
         actorTransition.play();
+        //forceSlider Listener
         forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
@@ -149,15 +162,4 @@ public class Controller {
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
-    @FXML
-    public void setForceOnDrop(DragEvent event) {
-    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-    //@Override
-    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-    //    Main.monitor.getActorForce().setValue(forceSlider.valueProperty().floatValue());
-    //      Main.monitor.getObj().applyForce(Main.monitor.getActorForce(),(float) 0.03);
-    //    }
-    //  });
-    }
-
 }
