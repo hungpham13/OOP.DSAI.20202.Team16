@@ -2,8 +2,12 @@ package screen;
 
 import animation.SpriteTransition;
 import animation.SurfaceAnimation;
+import cls.Force;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ObservableDoubleValue;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -14,6 +18,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+
+import java.util.Observable;
+
+import static screen.Main.monitor;
 
 public class Controller {
     @FXML
@@ -36,13 +44,22 @@ public class Controller {
     private ImageView subroad2;
 
     @FXML
-    private ImageView rightArrow;
+    private ImageView actorRightArrow;
 
     @FXML
-    private ImageView leftArrow;
+    private ImageView actorLeftArrow;
 
     @FXML
-    private ImageView totalForceArrow;
+    private ImageView fricRightArrow;
+
+    @FXML
+    private ImageView fricLeftArrow;
+
+    @FXML
+    private ImageView totalForceLeftArrow;
+
+    @FXML
+    private ImageView totalForceRightArrow;
 
     @FXML
     private void initialize() {
@@ -51,7 +68,7 @@ public class Controller {
         standActor.setImage(new Image(getClass().getResourceAsStream("/resources/standActor.png")));
         subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
         subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-
+        actorRightArrow.setImage((new Image(getClass().getResourceAsStream("/resources/actorArrow.png"))));
         //play
         playPressedBtn(new ActionEvent());
 
@@ -64,12 +81,12 @@ public class Controller {
         });
 
         //animate actor
-        SpriteTransition actorTransition = new SpriteTransition(actor,250,2,118,70,2,15,Main.monitor);
+        SpriteTransition actorTransition = new SpriteTransition(actor,250,2,118,70,2,15, monitor);
         actorTransition.play();
 
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
-            Main.monitor.getActorForce().setValue(t1.floatValue());
+            monitor.getActorForce().setValue(t1.floatValue());
             if (t1.intValue() == 0){
                 standActor.setVisible(true);
                 actor.setVisible(false);
@@ -80,10 +97,25 @@ public class Controller {
         });
 
         //animate surface
-        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor);
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, monitor);
         surfaceAnimation.start();
-    }
+        //add arrows listeners
+        //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
+          //  monitor.getActorForce().setValue(t1.floatValue());});
+        //display arrows
+        if (monitor.isPlaying()) {
+            Force totalForce = monitor.getActorForce().plus(monitor.getFrictionForce());
+            if (monitor.getActorForce().getValue() > 0) {
+                actorLeftArrow.setVisible(false);
 
+                double percentage = monitor.getActorForce().getValue()/100;
+                actorRightArrow.fitWidthProperty().setValue(actorRightArrow.fitWidthProperty().getValue()*percentage);
+                //actorRightArrow.fitWidthProperty().addListener(((observableValue, number, t1) -> {
+                actorRightArrow.setVisible(true);x`
+                //}));
+            }
+            }
+        }
     @FXML
     private JFXButton playBtn;
     @FXML
@@ -91,34 +123,24 @@ public class Controller {
 
     @FXML
     public void playPressedBtn(ActionEvent e) {
-        Main.monitor.cont();
+        monitor.cont();
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
 
     @FXML
     public void pausePressedBtn(ActionEvent e) {
-        Main.monitor.pause();
+        monitor.pause();
         pauseBtn.setDisable(true);
         playBtn.setDisable(false);
     }
 
     @FXML
     public void resetPressedBtn(ActionEvent e) {
-        Main.monitor.reset();
+        monitor.reset();
         //forceSlider.setValue(0);
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
-    }
-    @FXML
-    public void setForceOnDrop(DragEvent event) {
-    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-    //@Override
-    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-    //    Main.monitor.getActorForce().setValue(forceSlider.valueProperty().floatValue());
-    //      Main.monitor.getObj().applyForce(Main.monitor.getActorForce(),(float) 0.03);
-    //    }
-    //  });
     }
 
 }
