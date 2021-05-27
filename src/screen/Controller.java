@@ -29,7 +29,6 @@ public class Controller {
     private ImageView standActor;
     @FXML
     private ImageView actor;
-    private final SpriteTransition actorTransition = new SpriteTransition(actor,250,2,118,70,2,15);
 
     @FXML
     private ImageView subroad1;
@@ -56,18 +55,15 @@ public class Controller {
         });
 
         //animate actor
+        SpriteTransition actorTransition = new SpriteTransition(actor,250,2,118,70,2,15,Main.monitor);
         actorTransition.play();
 
         //add listener to force slider
-        forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                Main.monitor.getActorForce().setValue(t1.floatValue());
-            }
-        });
+        forceSlider.valueProperty().addListener((observableValue, number, t1) -> Main.monitor.getActorForce().setValue(t1.floatValue()));
 
         //animate surface
-        new SurfaceAnimation(road, displayPane, Main.monitor);
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor);
+        surfaceAnimation.start();
     }
 
     @FXML
@@ -78,7 +74,6 @@ public class Controller {
     @FXML
     public void playPressedBtn(ActionEvent e) {
         Main.monitor.cont();
-        actorTransition.play();
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
@@ -86,7 +81,6 @@ public class Controller {
     @FXML
     public void pausePressedBtn(ActionEvent e) {
         Main.monitor.pause();
-        actorTransition.stop();
         pauseBtn.setDisable(true);
         playBtn.setDisable(false);
     }
