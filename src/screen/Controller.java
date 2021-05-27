@@ -34,8 +34,8 @@ public class Controller {
     @FXML
     private void initialize() {
 
-        //play
-        playPressedBtn(new ActionEvent());
+        //reset all to init
+        resetPressedBtn(new ActionEvent());
 
         //clipping pane
         Rectangle outputClip = new Rectangle();

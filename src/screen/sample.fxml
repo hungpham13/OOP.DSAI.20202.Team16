@@ -40,7 +40,7 @@
                </effect>
                <children>
                   <JFXCheckBox layoutX="65.0" layoutY="64.0" />
-                  <JFXSlider fx:id="forceSlider" blockIncrement="25.0" layoutX="67.0" layoutY="192.0" min="-100.0" onDragDropped="#setForceOnDrop" prefHeight="37.0" prefWidth="222.0" showTickLabels="true" showTickMarks="true" />
+                  <JFXSlider fx:id="forceSlider" layoutX="24.0" layoutY="192.0" min="-100.0" onDragDropped="#setForceOnDrop" prefHeight="38.0" prefWidth="316.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                   <JFXToggleButton layoutX="35.0" layoutY="95.0" />
                </children>
                <HBox.margin>
@@ -114,13 +114,13 @@
                      <image>
                         <Image url="@../resources/standActor.png" />
                      </image></ImageView>
-                  <JFXButton fx:id="playBtn" buttonType="RAISED" defaultButton="true" layoutX="1070.0" layoutY="25.0" onAction="#playPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/play.png);" />
-                  <JFXButton fx:id="pauseBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="1145.0" layoutY="25.0" onAction="#pausePressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/pause.png);" viewOrder="2.0" />
-                  <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" viewOrder="2.0" />
                   <ImageView fx:id="rightActor" fitHeight="71.0" fitWidth="140.0" layoutX="700.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../resources/rightActor.png" />
                      </image></ImageView>
+                  <JFXButton fx:id="playBtn" buttonType="RAISED" defaultButton="true" layoutX="1070.0" layoutY="25.0" onAction="#playPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/play.png);" />
+                  <JFXButton fx:id="pauseBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="1145.0" layoutY="25.0" onAction="#pausePressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/pause.png);" />
+                  <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" />
                </children>
             </Pane>
          </children>
