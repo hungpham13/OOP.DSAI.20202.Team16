@@ -1,27 +1,19 @@
 package screen;
 
-import cls.Force;
-import cls.Object;
+import animation.SpriteTransition;
+import animation.SurfaceAnimation;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
-import javafx.animation.Interpolator;
-import javafx.animation.Transition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
-
-import java.util.Objects;
 
 public class Controller {
     @FXML
@@ -37,41 +29,12 @@ public class Controller {
     private ImageView standActor;
     @FXML
     private ImageView actor;
+    private final SpriteTransition actorTransition = new SpriteTransition(actor,250,2,118,70,2,15);
 
-    private final Transition actorTransition = new Transition() {
-        final int width = 118;
-        final int height = 70;
-        final int offsetX = 2;
-        final int offsetY = 15;
-
-        {
-            setCycleDuration(Duration.millis(250));
-            setCycleCount(Animation.INDEFINITE);
-            setInterpolator(Interpolator.LINEAR);
-        }
-
-        @Override
-        protected void interpolate(double k) {
-            int index = Math.min((int) Math.floor(k * 2), 1);
-            int x = (index % 2) * width + offsetX;
-            int y = (index / 2) * height + offsetY;
-            actor.setViewport(new Rectangle2D(x, y, width, height));
-        }
-    };
     @FXML
     private ImageView subroad1;
-
     @FXML
     private ImageView subroad2;
-
-    @FXML
-    private ImageView rightArrow;
-
-    @FXML
-    private ImageView leftArrow;
-
-    @FXML
-    private ImageView totalForceArrow;
 
     @FXML
     private void initialize() {
@@ -83,6 +46,7 @@ public class Controller {
 
         //play
         playPressedBtn(new ActionEvent());
+
         //clipping pane
         Rectangle outputClip = new Rectangle();
         displayPane.setClip(outputClip);
@@ -91,48 +55,19 @@ public class Controller {
             outputClip.setHeight(newValue.getHeight());
         });
 
-        //actorforce size listener
-
         //animate actor
         actorTransition.play();
-        //forceSlider Listener
+
+        //add listener to force slider
         forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                Main.monitor.getActorForce().setValue( t1.floatValue());
+                Main.monitor.getActorForce().setValue(t1.floatValue());
             }
         });
+
         //animate surface
-        final long[] startNanoTime = {System.nanoTime()};
-        new AnimationTimer() {
-            @Override
-            public void handle(long currentNanoTime) {
-                //create infinity road
-                if (road.getLayoutX() >= -30) {
-                    road.setLayoutX(road.getLayoutX() - 1690);
-                } else if (road.getLayoutX() <= displayPane.getWidth() + 30 - (1690 + 1722)) {
-                    road.setLayoutX(road.getLayoutX() + 1690);
-                }
-
-                //move the road
-                double t = (currentNanoTime - startNanoTime[0]) / 1000000000.0;
-                if (Main.monitor.isPlaying()) {
-                    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-                    //  @Override
-                    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                    Force actorForce = Main.monitor.getActorForce();
-                    //actorForce.setValue((float) t1);
-                    Force totalForce = actorForce.plus(Main.monitor.getFrictionForce());
-                    Main.monitor.getObj().applyForce(totalForce, (float) t);
-              //  }
-            //});
-                    //Main.monitor.getObj().applyForce(totalForce, (float) t);
-                    road.setLayoutX(road.getLayoutX() - t * Main.monitor.getObj().getVelocity());
-
-                }
-                startNanoTime[0] = currentNanoTime;
-            }
-        }.start();
+        new SurfaceAnimation(road, displayPane, Main.monitor);
     }
 
     @FXML
@@ -162,4 +97,15 @@ public class Controller {
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
+    @FXML
+    public void setForceOnDrop(DragEvent event) {
+    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
+    //@Override
+    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+    //    Main.monitor.getActorForce().setValue(forceSlider.valueProperty().floatValue());
+    //      Main.monitor.getObj().applyForce(Main.monitor.getActorForce(),(float) 0.03);
+    //    }
+    //  });
+    }
+
 }
