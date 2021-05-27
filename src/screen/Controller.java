@@ -4,11 +4,11 @@ import animation.SpriteTransition;
 import animation.SurfaceAnimation;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -68,7 +68,16 @@ public class Controller {
         actorTransition.play();
 
         //add listener to force slider
-        forceSlider.valueProperty().addListener((observableValue, number, t1) -> Main.monitor.getActorForce().setValue(t1.floatValue()));
+        forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
+            Main.monitor.getActorForce().setValue(t1.floatValue());
+            if (t1.intValue() == 0){
+                standActor.setVisible(true);
+                actor.setVisible(false);
+            } else if (t1.intValue() != 0){
+                actor.setVisible(true);
+                standActor.setVisible(false);
+            }
+        });
 
         //animate surface
         SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor);
@@ -97,6 +106,7 @@ public class Controller {
     @FXML
     public void resetPressedBtn(ActionEvent e) {
         Main.monitor.reset();
+        //forceSlider.setValue(0);
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
