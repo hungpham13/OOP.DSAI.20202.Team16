@@ -85,12 +85,11 @@
                         <ImageView fx:id="subroad2" fitHeight="75.0" fitWidth="1722.0" layoutX="1690.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Group>
-                  <ImageView fx:id="actor" fitHeight="71.0" fitWidth="140.0" layoutX="164.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="actor" fitHeight="71.0" fitWidth="140.0" layoutX="358.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="standActor" fitHeight="104.0" fitWidth="117.0" layoutX="358.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
                   <JFXButton fx:id="playBtn" buttonType="RAISED" defaultButton="true" layoutX="1070.0" layoutY="25.0" onAction="#playPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/play.png);" />
                   <JFXButton fx:id="pauseBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="1145.0" layoutY="25.0" onAction="#pausePressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/pause.png);" viewOrder="2.0" />
                   <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" viewOrder="2.0" />
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" />
                </children>
             </Pane>
          </children>
