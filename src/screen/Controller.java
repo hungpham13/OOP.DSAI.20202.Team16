@@ -1,7 +1,9 @@
 package screen;
 
-import cls.Force;
+import animation.SpriteTransition;
+import animation.SurfaceAnimation;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXSlider;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
@@ -10,9 +12,7 @@ import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
@@ -28,35 +28,20 @@ public class Controller {
     private Pane displayPane;
 
     @FXML
+    private JFXSlider forceSlider;
+
+    @FXML
     private Group road;
+
+    @FXML
+    private Group background;
 
     @FXML
     private ImageView standActor;
     @FXML
-    private ImageView actor;
-
-    private final Transition actorTransition = new Transition(){
-        final int width = 118;
-        final int height = 70;
-        final int offsetX = 2;
-        final int offsetY = 15;
-        {
-            setCycleDuration(Duration.millis(250));
-            setCycleCount(Animation.INDEFINITE);
-            setInterpolator(Interpolator.LINEAR);
-        }
-        @Override
-        protected void interpolate(double k) {
-            int index = Math.min((int) Math.floor(k*2),1);
-            int x = (index%2)*width + offsetX;
-            int y = (index/2)*height + offsetY;
-            actor.setViewport(new Rectangle2D(x,y,width,height));
-        }
-    };
+    private ImageView leftActor;
     @FXML
-    private ImageView subroad1;
-    @FXML
-    private ImageView subroad2;
+    private ImageView rightActor;
 
     // Slider to change edge (radius) size of object
     @FXML
@@ -87,14 +72,11 @@ public class Controller {
     private StackPane stackPaneCube;
 
     @FXML
-    private void initialize(){
-        //setup resources
-        actor.setImage(new Image(getClass().getResourceAsStream("/resources/actor.png")));
-        standActor.setImage(new Image(getClass().getResourceAsStream("/resources/standActor.png")));
-        subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-        subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-        //play
-        playPressedBtn(new ActionEvent());
+    private void initialize() {
+
+        //reset all to init
+        resetPressedBtn(new ActionEvent());
+
         //clipping pane
         Rectangle outputClip = new Rectangle();
         displayPane.setClip(outputClip);
@@ -166,59 +148,71 @@ public class Controller {
 
 
         //animate actor
-        actorTransition.play();
+        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,250,2,118,70,2,15,Main.monitor);
+        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,250,2,118,70,3,15,Main.monitor);
+        rightActorTransition.play();
+        leftActorTransition.play();
+
+        //add listener to force slider
+        forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
+            Main.monitor.getActorForce().setValue(t1.floatValue());
+            if (t1.intValue() == 0){
+                standActor.setVisible(true);
+                leftActor.setVisible(false);
+                rightActor.setVisible(false);
+            } else if (t1.intValue() > 0){
+                leftActor.setVisible(true);
+                standActor.setVisible(false);
+                rightActor.setVisible(false);
+            } else if (t1.intValue() < 0){
+                rightActor.setVisible(true);
+                leftActor.setVisible(false);
+                standActor.setVisible(false);
+            }
+        });
 
         //animate surface
-        final long[] startNanoTime = {System.nanoTime()};
-        new AnimationTimer(){
-            @Override
-            public void handle(long currentNanoTime) {
-                //create infinity road
-                if (road.getLayoutX() >= -30) {
-                    road.setLayoutX(road.getLayoutX()-1690);
-                } else if (road.getLayoutX() <= displayPane.getWidth()+30-(1690+1722)) {
-                    road.setLayoutX(road.getLayoutX()+1690);
-                }
-
-                //move the road
-                double t = (currentNanoTime - startNanoTime[0])/ 1000000000.0;
-                if (Main.monitor.isPlaying()) {
-                    //calculate new total applied force to object
-                    Force totalForce = Main.monitor.getActorForce().plus(Main.monitor.getFrictionForce());
-                    //apply total force to object
-                    Main.monitor.getObj().applyForce(totalForce, (float) t);
-                    //move road based on new velocity of object
-                    road.setLayoutX(road.getLayoutX() - t * Main.monitor.getObj().getVelocity());
-                }
-
-                startNanoTime[0] = currentNanoTime;
-            }
-        }.start();
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, 1F);
+        SurfaceAnimation backgroundAnimation = new SurfaceAnimation(background, displayPane, Main.monitor, 0.1F);
+        backgroundAnimation.start();
+        surfaceAnimation.start();
     }
 
     @FXML
     private JFXButton playBtn;
     @FXML
     private JFXButton pauseBtn;
+
     @FXML
-    public void playPressedBtn(ActionEvent e){
+    public void playPressedBtn(ActionEvent e) {
         Main.monitor.cont();
-        actorTransition.play();
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
+
     @FXML
-    public void pausePressedBtn(ActionEvent e){
+    public void pausePressedBtn(ActionEvent e) {
         Main.monitor.pause();
-        actorTransition.stop();
         pauseBtn.setDisable(true);
         playBtn.setDisable(false);
     }
+
     @FXML
-    public void resetPressedBtn(ActionEvent e){
+    public void resetPressedBtn(ActionEvent e) {
         Main.monitor.reset();
+        forceSlider.setValue(0);
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
+    }
+    @FXML
+    public void setForceOnDrop(DragEvent event) {
+    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
+    //@Override
+    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+    //    Main.monitor.getActorForce().setValue(forceSlider.valueProperty().floatValue());
+    //      Main.monitor.getObj().applyForce(Main.monitor.getActorForce(),(float) 0.03);
+    //    }
+    //  });
     }
 
     void mouseDragExited(DragEvent e) {
