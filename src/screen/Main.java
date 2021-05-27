@@ -4,7 +4,6 @@ import cls.Cube;
 import cls.Force;
 import cls.Monitor;
 import cls.Surface;
-import cls.Object;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
