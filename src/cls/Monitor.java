@@ -3,8 +3,8 @@ package cls;
 public class Monitor {
     private Object obj = null;
     private boolean playing = true;
-    private Surface surface;
-    private Force actor;
+    private final Surface surface;
+    private final Force actor;
 
 
     public Monitor(Object obj, Surface surface, Force actor) {
@@ -14,18 +14,18 @@ public class Monitor {
     }
 
     public boolean isPlaying() {
-        return playing;
+        if (!isEmpty()) {
+            return playing;
+        } else {
+            return false;
+        }
     }
 
     public boolean isEmpty(){
         return obj == null;
     }
-    public void setObj(Object newObj) throws Exception {
-        if (isEmpty()){
-            obj = newObj;
-        } else {
-            throw new Exception("Object is already exist");
-        }
+    public void setObj(Object newObj) {
+        obj = newObj;
     }
     public Object getObj(){
         return obj;
@@ -59,7 +59,7 @@ public class Monitor {
     }
     public void reset(){
         actor.setValue(0);
-        obj.setVelocity(0);
+        setObj(null);
         playing = true;
     }
 }

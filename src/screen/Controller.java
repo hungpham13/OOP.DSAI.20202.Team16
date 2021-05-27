@@ -66,7 +66,7 @@ public class Controller {
     private void initialize() {
 
         //reset all to init
-        resetPressedBtn(new ActionEvent());
+        //resetPressedBtn(new ActionEvent());
 
         //clipping pane
         Rectangle outputClip = new Rectangle();
@@ -79,15 +79,15 @@ public class Controller {
 
 
         //animate actor
-        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,200,2,118,70,2,15,Main.monitor);
-        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,200,2,118,70,3,15,Main.monitor);
+        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,250,2,118,70,2,15,Main.monitor);
+        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,250,2,118,70,3,15,Main.monitor);
         rightActorTransition.play();
         leftActorTransition.play();
 
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
             Main.monitor.getActorForce().setValue(t1.floatValue());
-            if (t1.intValue() == 0){
+            if (t1.intValue() == 0 || !Main.monitor.isPlaying()){
                 standActor.setVisible(true);
                 leftActor.setVisible(false);
                 rightActor.setVisible(false);

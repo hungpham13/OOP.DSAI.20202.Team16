@@ -41,11 +41,11 @@ public class SurfaceAnimation extends AnimationTimer {
 
     @Override
     public void handle(long currentNanoTime) {
-        //create infinity road
+        //create infinity road and background
         createInf(road);
         createInf(background);
 
-        //move the road
+        //move the road and background
         float t = (float) ((currentNanoTime - startNanoTime) / 1000000000.0);
         moveSurface(road,t,1);
         moveSurface(background,t,backgroundVelocityRate);

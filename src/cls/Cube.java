@@ -5,7 +5,7 @@ public class Cube extends Object {
     private float sizeLength;
     private float MAXIMUM_THRES = 1;
 
-    public Cube(float mass, float sizeLength) {
+    public Cube(float mass, float sizeLength) throws Exception {
         super(mass);
         this.setSizeLength(sizeLength);
         System.out.println("Cube is constructed");

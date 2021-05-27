@@ -27,10 +27,12 @@ public class SpriteTransition extends Transition {
         this.offsetY = offsetY;
         this.monitor = monitor;
 
+        setDelay(Duration.millis(0));
         setCycleDuration(Duration.millis(duration));
         setCycleCount(Animation.INDEFINITE);
         setInterpolator(Interpolator.LINEAR);
-}
+        actor.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
+    }
 
     @Override
     protected void interpolate(double k) {
