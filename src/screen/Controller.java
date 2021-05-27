@@ -4,11 +4,6 @@ import animation.SpriteTransition;
 import animation.SurfaceAnimation;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXSlider;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
-import javafx.animation.Interpolator;
-import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,11 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import javafx.scene.control.*;
-
-import javax.swing.*;
-import java.util.Objects;
 
 public class Controller {
     @FXML
@@ -84,66 +75,6 @@ public class Controller {
             outputClip.setWidth(newValue.getWidth());
             outputClip.setHeight(newValue.getHeight());
         });
-
-
-        // Lap's work
-        // Add event handler for drag and drop
-        stackPaneOnRoad.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragOver(dragEvent);
-            }
-        });
-        stackPaneCylinder.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragOver(dragEvent);
-            }
-        });
-        stackPaneCube.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragOver(dragEvent);
-            }
-        });
-        stackPaneOnRoad.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragDropped(dragEvent);
-            }
-        });
-        stackPaneCylinder.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragDropped(dragEvent);
-            }
-        });
-        stackPaneCube.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragDropped(dragEvent);
-            }
-        });
-        stackPaneOnRoad.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragExited(dragEvent);
-            }
-        });
-        stackPaneCylinder.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragExited(dragEvent);
-            }
-        });
-        stackPaneCube.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                mouseDragExited(dragEvent);
-            }
-        });
-
-
 
 
 
@@ -215,15 +146,23 @@ public class Controller {
     //  });
     }
 
+    @FXML
     void mouseDragExited(DragEvent e) {
         System.out.println("DragExited");
     }
 
+    @FXML
     void mouseDragOver(DragEvent e) {
         System.out.println("DragOver");
     }
 
+    @FXML
     void mouseDragDropped(DragEvent e) {
         System.out.println("DragDropped");
+    }
+
+    @FXML
+    void mouseDragDetected(DragEvent e) {
+        System.out.println("DragDetected");
     }
 }
