@@ -1,5 +1,6 @@
 package screen;
 
+import animation.ActorAnimation;
 import animation.SpriteTransition;
 import animation.SurfaceAnimation;
 import com.jfoenix.controls.JFXButton;
@@ -79,27 +80,14 @@ public class Controller {
 
 
         //animate actor
-        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,250,2,118,70,2,15,Main.monitor);
-        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,250,2,118,70,3,15,Main.monitor);
-        rightActorTransition.play();
-        leftActorTransition.play();
+        ActorAnimation actorAnimation = new ActorAnimation(standActor,leftActor,rightActor,Main.monitor,
+                new int[]{2, 118, 70, 2, 15},
+                new int[]{2, 118, 70, 3, 15});
 
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
             Main.monitor.getActorForce().setValue(t1.floatValue());
-            if (t1.intValue() == 0 || !Main.monitor.isPlaying()){
-                standActor.setVisible(true);
-                leftActor.setVisible(false);
-                rightActor.setVisible(false);
-            } else if (t1.intValue() > 0){
-                leftActor.setVisible(true);
-                standActor.setVisible(false);
-                rightActor.setVisible(false);
-            } else if (t1.intValue() < 0){
-                rightActor.setVisible(true);
-                leftActor.setVisible(false);
-                standActor.setVisible(false);
-            }
+            actorAnimation.update();
         });
 
         //animate surface
