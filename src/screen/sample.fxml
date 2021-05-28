@@ -5,15 +5,22 @@
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -84,7 +91,7 @@
                </effect>
                <children>
                   <JFXCheckBox layoutX="65.0" layoutY="64.0" />
-                  <JFXSlider fx:id="forceSlider" layoutX="67.0" layoutY="192.0" min="-100.0" onDragDropped="#setForceOnDrop" prefHeight="37.0" prefWidth="222.0" showTickLabels="true" showTickMarks="true" />
+                  <JFXSlider fx:id="forceSlider" layoutX="67.0" layoutY="192.0" min="-100.0" prefHeight="37.0" prefWidth="222.0" showTickLabels="true" showTickMarks="true" />
                   <JFXToggleButton layoutX="35.0" layoutY="95.0" />
                </children>
                <HBox.margin>
@@ -172,16 +179,17 @@
                      <viewport>
                         <Rectangle2D height="50.0" minY="50.0" />
                      </viewport>
-                     <rotationAxis>
-                        <Point3D />
-                     </rotationAxis>
-                     <cursor>
-                        <Cursor fx:constant="E_RESIZE" />
-                     </cursor></ImageView>
+                     <image>
+                        <Image url="@../resources/actorArrow.png" />
+                     </image>
+                     </ImageView>
                   <ImageView fx:id="actorRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true">
                      <viewport>
                         <Rectangle2D height="50.0" minY="50.0" />
-                     </viewport></ImageView>
+                     </viewport>
+                     <image>
+                        <Image url="@../resources/actorArrow.png" />
+                     </image></ImageView>
                   <ImageView fx:id="fricLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="fricRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true" />
                </children>
