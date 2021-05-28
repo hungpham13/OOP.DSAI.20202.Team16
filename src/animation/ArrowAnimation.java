@@ -1,13 +1,9 @@
 package animation;
 
 import cls.Monitor;
-import javafx.animation.AnimationTimer;
-import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
-public class ArrowAnimation extends AnimationTimer {
+public class ArrowAnimation {
     private final Monitor monitor;
     private ImageView actorRightArrow;
     private ImageView actorLeftArrow;
@@ -16,15 +12,14 @@ public class ArrowAnimation extends AnimationTimer {
     private ImageView totalForceLeftArrow;
     private ImageView totalForceRightArrow;
     private float oldActorLength;
-    private long startNanoTime = System.nanoTime();
     public ArrowAnimation(Monitor monitor, ImageView actorLeftArrow, ImageView actorRightArrow) {
         this.monitor = monitor;
         this.actorLeftArrow = actorLeftArrow;
         this.actorRightArrow = actorRightArrow;
         this.oldActorLength = (float) actorLeftArrow.getFitWidth();
+        monitor.getActorForce().getValueProperty().addListener((observableValue) -> update());
     }
-    @Override
-    public void handle(long currentNanoTime) {
+    public void update(){
         if (monitor.getActorForce().getValue() > 0) {
             actorLeftArrow.setVisible(false);
             actorRightArrow.fitWidthProperty().setValue(monitor.getActorForce().getValue());
@@ -38,7 +33,6 @@ public class ArrowAnimation extends AnimationTimer {
             actorLeftArrow.fitHeightProperty().setValue(50);
             actorLeftArrow.setVisible(true);
         }
-        startNanoTime = currentNanoTime;
         oldActorLength = (float) actorLeftArrow.getFitWidth();
     }
 }

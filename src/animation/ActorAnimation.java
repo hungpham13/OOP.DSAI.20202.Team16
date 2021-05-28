@@ -20,11 +20,12 @@ public class ActorAnimation {
         this.monitor = monitor;
         this.leftActorPara = leftActorPara;
         this.rightActorPara = rightActorPara;
+
+        monitor.getActorForce().getValueProperty().addListener((observableValue, number, t1) -> update(t1.floatValue()));
     }
 
-    public void update(){
+    public void update(float forceValue){
         //call this method when the actor force value in monitor is changed
-        float forceValue = monitor.getActorForce().getValue();
         float duration = 10*(100-Math.abs(forceValue)) + 200;
         if (forceValue == 0 || !Main.monitor.isPlaying()){
             standActor.setVisible(true);

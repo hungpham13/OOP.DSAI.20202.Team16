@@ -2,13 +2,12 @@ package screen;
 
 import animation.ActorAnimation;
 import animation.ArrowAnimation;
-import animation.SpriteTransition;
 import animation.SurfaceAnimation;
-import cls.Force;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableStringValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
@@ -17,7 +16,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.*;
 
-import java.util.Observable;
 
 import static screen.Main.monitor;
 
@@ -27,6 +25,11 @@ public class Controller {
 
     @FXML
     private JFXSlider forceSlider;
+    @FXML
+    private JFXSlider kineticSlider;
+    @FXML
+    private JFXSlider staticSlider;
+
 
     @FXML
     private Group road;
@@ -88,6 +91,14 @@ public class Controller {
     private ImageView totalForceRightArrow;
 
     @FXML
+    private Label forceValueLabel;
+    @FXML
+    private Label accelerationLabel;
+    @FXML
+    private Label velocityLabel;
+
+
+    @FXML
     private void initialize() {
 
         //reset all to init
@@ -101,28 +112,55 @@ public class Controller {
             outputClip.setHeight(newValue.getHeight());
         });
 
+        //bind force value with label
+        ObservableStringValue formattedForceValue = Bindings.createStringBinding(()->
+                "Force: " + monitor.getActorForce().getValue() + " N",
+                monitor.getActorForce().getValueProperty());
+        forceValueLabel.textProperty().bind(formattedForceValue);
 
+        //bind acceleration with label
+        ObservableStringValue formattedAcceleration = Bindings.createStringBinding(()->
+                        "Acceleration: " + monitor.getObjAcceleration() + " m/s2",
+                monitor.getObj().getMassProperty(),monitor.getActorForce().getValueProperty());
+        accelerationLabel.textProperty().bind(formattedAcceleration);
+
+        //bind velocity with label
+        ObservableStringValue formattedVelocity = Bindings.createStringBinding(()->
+                        "Velocity: " + monitor.getObj().getVelocity() + " m/s",
+                monitor.getObj().getVelocityProperty());
+        velocityLabel.textProperty().bind(formattedVelocity);
 
         //animate actor
         ActorAnimation actorAnimation = new ActorAnimation(standActor,leftActor,rightActor,Main.monitor,
                 new int[]{2, 118, 70, 2, 15},
                 new int[]{2, 118, 70, 3, 15});
 
+        //animate arrows
+        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow);
+
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
             Main.monitor.getActorForce().setValue(t1.floatValue());
-            actorAnimation.update();
+        });
+        //add listener to surface coefficient slider
+        kineticSlider.valueProperty().addListener((observableValue, number, t1) -> {
+            try {
+                Main.monitor.getSurface().setKineticFrictionCoef(t1.floatValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        staticSlider.valueProperty().addListener((observableValue, number, t1) -> {
+            try {
+                Main.monitor.getSurface().setStaticFrictionCoef(t1.floatValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         //animate surface
         SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background,0.1F);
         surfaceAnimation.start();
-        //add arrows listeners
-        //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
-          //  monitor.getActorForce().setValue(t1.floatValue());});
-        //display arrows
-        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow);
-        arrowAnimation.start();
         }
     @FXML
     private JFXButton playBtn;

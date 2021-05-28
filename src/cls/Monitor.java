@@ -1,6 +1,9 @@
 package cls;
 
 
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.value.ObservableFloatValue;
+
 public class Monitor {
     private Object obj = null;
     private boolean playing = true;
@@ -21,10 +24,10 @@ public class Monitor {
             return false;
         }
     }
-
     public boolean isEmpty(){
         return obj == null;
     }
+
     public void setObj(Object newObj) {
         obj = newObj;
     }
@@ -34,6 +37,10 @@ public class Monitor {
     public Force getActorForce(){
         return actor;
     }
+    public Surface getSurface(){
+        return surface;
+    }
+
     public Force getFrictionForce(){
         Force frictionForce = new Force();
         float normalForce = 10*obj.getMass();
@@ -54,6 +61,7 @@ public class Monitor {
         }
         return frictionForce;
     }
+
     public void pause(){
         playing = false;
     }
@@ -64,5 +72,12 @@ public class Monitor {
         actor.setValue(0);
         setObj(null);
         playing = true;
+    }
+    public float getObjAcceleration(){
+        return obj.getAcceleration(actor.plus(getFrictionForce()));
+    }
+    public void appliedForceToObjInTime(float t){
+        Force totalForce = actor.plus(getFrictionForce());
+        obj.applyForce(totalForce, t);
     }
 }

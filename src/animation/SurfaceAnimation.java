@@ -30,14 +30,6 @@ public class SurfaceAnimation extends AnimationTimer {
             road.setLayoutX(road.getLayoutX() + child2.getLayoutX());
         }
     }
-    private void moveSurface(Group road, float t, float velocityRate){
-        if (monitor.isPlaying()) {
-            Force totalForce = monitor.getActorForce().plus(monitor.getFrictionForce());
-            monitor.getObj().applyForce(totalForce, t);
-            road.setLayoutX(road.getLayoutX() - t * velocityRate* monitor.getObj().getVelocity());
-        }
-
-    }
 
     @Override
     public void handle(long currentNanoTime) {
@@ -47,8 +39,11 @@ public class SurfaceAnimation extends AnimationTimer {
 
         //move the road and background
         float t = (float) ((currentNanoTime - startNanoTime) / 1000000000.0);
-        moveSurface(road,t,1);
-        moveSurface(background,t,backgroundVelocityRate);
+        if (monitor.isPlaying()){
+            monitor.appliedForceToObjInTime(t);
+            road.setLayoutX(road.getLayoutX() - t * 1 * monitor.getObj().getVelocity());
+            background.setLayoutX(background.getLayoutX() - t * backgroundVelocityRate * monitor.getObj().getVelocity());
+        }
         startNanoTime = currentNanoTime;
     }
 }
