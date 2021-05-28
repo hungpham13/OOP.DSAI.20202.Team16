@@ -41,6 +41,7 @@ public class SurfaceAnimation extends AnimationTimer {
         float t = (float) ((currentNanoTime - startNanoTime) / 1000000000.0);
         if (monitor.isPlaying()){
             monitor.appliedForceToObjInTime(t);
+            //*260
             road.setLayoutX(road.getLayoutX() - t * 1 * monitor.getObj().getVelocity());
             background.setLayoutX(background.getLayoutX() - t * backgroundVelocityRate * monitor.getObj().getVelocity());
         }
