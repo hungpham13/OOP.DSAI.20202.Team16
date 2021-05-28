@@ -1,8 +1,10 @@
 package screen;
 
 import animation.ActorAnimation;
+import animation.ArrowAnimation;
 import animation.SpriteTransition;
 import animation.SurfaceAnimation;
+import cls.Force;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
@@ -14,6 +16,10 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.*;
+
+import java.util.Observable;
+
+import static screen.Main.monitor;
 
 public class Controller {
     @FXML
@@ -64,6 +70,24 @@ public class Controller {
     private StackPane stackPaneCube;
 
     @FXML
+    private ImageView actorRightArrow;
+
+    @FXML
+    private ImageView actorLeftArrow;
+
+    @FXML
+    private ImageView fricRightArrow;
+
+    @FXML
+    private ImageView fricLeftArrow;
+
+    @FXML
+    private ImageView totalForceLeftArrow;
+
+    @FXML
+    private ImageView totalForceRightArrow;
+
+    @FXML
     private void initialize() {
 
         //reset all to init
@@ -93,8 +117,13 @@ public class Controller {
         //animate surface
         SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background,0.1F);
         surfaceAnimation.start();
-    }
-
+        //add arrows listeners
+        //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
+          //  monitor.getActorForce().setValue(t1.floatValue());});
+        //display arrows
+        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow);
+        arrowAnimation.start();
+        }
     @FXML
     private JFXButton playBtn;
     @FXML
@@ -120,16 +149,6 @@ public class Controller {
         forceSlider.setValue(0);
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
-    }
-    @FXML
-    public void setForceOnDrop(DragEvent event) {
-    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-    //@Override
-    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-    //    Main.monitor.getActorForce().setValue(forceSlider.valueProperty().floatValue());
-    //      Main.monitor.getObj().applyForce(Main.monitor.getActorForce(),(float) 0.03);
-    //    }
-    //  });
     }
 
     @FXML
