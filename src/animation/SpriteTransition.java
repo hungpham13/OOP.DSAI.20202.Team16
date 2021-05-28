@@ -17,20 +17,22 @@ public class SpriteTransition extends Transition {
     private final int count;
     private final Monitor monitor;
 
-    public SpriteTransition(ImageView actor, int duration, int count, int width, int height, int offsetX,
-                            int offsetY, Monitor monitor){
+    public SpriteTransition(ImageView actor, int duration, int[] para, Monitor monitor){
+        //parameters for actor image - para: [count, width, height, offsetX, offsetY]
         this.actor = actor;
-        this.count = count;
-        this.width = width;
-        this.height = height;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
+        this.count = para[0];
+        this.width = para[1];
+        this.height = para[2];
+        this.offsetX = para[3];
+        this.offsetY = para[4];
         this.monitor = monitor;
 
+        setDelay(Duration.millis(0));
         setCycleDuration(Duration.millis(duration));
         setCycleCount(Animation.INDEFINITE);
         setInterpolator(Interpolator.LINEAR);
-}
+        actor.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
+    }
 
     @Override
     protected void interpolate(double k) {

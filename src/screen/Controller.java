@@ -1,8 +1,11 @@
 package screen;
 
+import animation.ActorAnimation;
+import animation.ArrowAnimation;
 import animation.SpriteTransition;
 import animation.SurfaceAnimation;
 import cls.Object;
+import cls.Force;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
@@ -14,13 +17,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import java.util.Observable;
+
+import static screen.Main.monitor;
 
 public class Controller {
 
@@ -83,10 +89,28 @@ public class Controller {
     private Label lbDropOnRoad;
 
     @FXML
+    private ImageView actorRightArrow;
+
+    @FXML
+    private ImageView actorLeftArrow;
+
+    @FXML
+    private ImageView fricRightArrow;
+
+    @FXML
+    private ImageView fricLeftArrow;
+
+    @FXML
+    private ImageView totalForceLeftArrow;
+
+    @FXML
+    private ImageView totalForceRightArrow;
+
+    @FXML
     private void initialize() {
 
         //reset all to init
-        resetPressedBtn(new ActionEvent());
+        //resetPressedBtn(new ActionEvent());
 
         //clipping pane
         Rectangle outputClip = new Rectangle();
@@ -101,27 +125,14 @@ public class Controller {
 
 
         //animate actor
-        SpriteTransition leftActorTransition = new SpriteTransition(leftActor,200,2,118,70,2,15,Main.monitor);
-        SpriteTransition rightActorTransition = new SpriteTransition(rightActor,200,2,118,70,3,15,Main.monitor);
-        rightActorTransition.play();
-        leftActorTransition.play();
+        ActorAnimation actorAnimation = new ActorAnimation(standActor,leftActor,rightActor,Main.monitor,
+                new int[]{2, 118, 70, 2, 15},
+                new int[]{2, 118, 70, 3, 15});
 
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
             Main.monitor.getActorForce().setValue(t1.floatValue());
-            if (t1.intValue() == 0){
-                standActor.setVisible(true);
-                leftActor.setVisible(false);
-                rightActor.setVisible(false);
-            } else if (t1.intValue() > 0){
-                leftActor.setVisible(true);
-                standActor.setVisible(false);
-                rightActor.setVisible(false);
-            } else if (t1.intValue() < 0){
-                rightActor.setVisible(true);
-                leftActor.setVisible(false);
-                standActor.setVisible(false);
-            }
+            actorAnimation.update();
         });
 
 
@@ -129,9 +140,13 @@ public class Controller {
         //animate surface
         SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background,0.1F);
         surfaceAnimation.start();
-
-    }
-
+        //add arrows listeners
+        //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
+          //  monitor.getActorForce().setValue(t1.floatValue());});
+        //display arrows
+        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow);
+        arrowAnimation.start();
+        }
     @FXML
     private JFXButton playBtn;
     @FXML
@@ -157,16 +172,6 @@ public class Controller {
         forceSlider.setValue(0);
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
-    }
-    @FXML
-    public void setForceOnDrop(DragEvent event) {
-    //forceSlider.valueProperty().addListener(new ChangeListener<Number>() {
-    //@Override
-    //public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-    //    Main.monitor.getActorForce().setValue(forceSlider.valueProperty().floatValue());
-    //      Main.monitor.getObj().applyForce(Main.monitor.getActorForce(),(float) 0.03);
-    //    }
-    //  });
     }
 
     @FXML
@@ -235,6 +240,7 @@ public class Controller {
         System.out.println("DragExited");
         dragEvent.consume();
     }
+
     @FXML
     public void onDragOver(DragEvent dragEvent) {
         System.out.println("DragOver");
@@ -243,6 +249,7 @@ public class Controller {
         }
         dragEvent.consume();
     }
+
     @FXML
     public void onDragDropped(DragEvent dragEvent) {
         System.out.println("DragDropped");
@@ -261,6 +268,7 @@ public class Controller {
         dragEvent.setDropCompleted(success);
         dragEvent.consume();
     }
+
     @FXML
     public void onDragDone(DragEvent dragEvent){
         System.out.println("DragDone");
