@@ -274,4 +274,9 @@ public class Controller {
         System.out.println("DragDone");
         // TODO Clear image from source
     }
+
+    @FXML
+    public void setForceOnDrop() {
+
+    }
 }
