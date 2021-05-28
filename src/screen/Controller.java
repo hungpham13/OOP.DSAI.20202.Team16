@@ -1,5 +1,6 @@
 package screen;
 
+import animation.ArrowAnimation;
 import animation.SpriteTransition;
 import animation.SurfaceAnimation;
 import cls.Force;
@@ -69,6 +70,7 @@ public class Controller {
         subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
         subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
         actorRightArrow.setImage((new Image(getClass().getResourceAsStream("/resources/actorArrow.png"))));
+        actorLeftArrow.setImage((new Image(getClass().getResourceAsStream("/resources/actorArrow.png"))));
         //play
         playPressedBtn(new ActionEvent());
 
@@ -103,18 +105,8 @@ public class Controller {
         //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
           //  monitor.getActorForce().setValue(t1.floatValue());});
         //display arrows
-        if (monitor.isPlaying()) {
-            Force totalForce = monitor.getActorForce().plus(monitor.getFrictionForce());
-            if (monitor.getActorForce().getValue() > 0) {
-                actorLeftArrow.setVisible(false);
-
-                double percentage = monitor.getActorForce().getValue()/100;
-                actorRightArrow.fitWidthProperty().setValue(actorRightArrow.fitWidthProperty().getValue()*percentage);
-                //actorRightArrow.fitWidthProperty().addListener(((observableValue, number, t1) -> {
-                actorRightArrow.setVisible(true);x`
-                //}));
-            }
-            }
+        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow);
+        arrowAnimation.start();
         }
     @FXML
     private JFXButton playBtn;
