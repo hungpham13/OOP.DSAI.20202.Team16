@@ -1,24 +1,21 @@
 package screen;
 
+import animation.ActorAnimation;
 import animation.ArrowAnimation;
 import animation.SpriteTransition;
 import animation.SurfaceAnimation;
 import cls.Force;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ObservableDoubleValue;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.control.*;
 
 import java.util.Observable;
 
@@ -35,14 +32,42 @@ public class Controller {
     private Group road;
 
     @FXML
-    private ImageView standActor;
-    @FXML
-    private ImageView actor;
+    private Group background;
 
     @FXML
-    private ImageView subroad1;
+    private ImageView standActor;
     @FXML
-    private ImageView subroad2;
+    private ImageView leftActor;
+    @FXML
+    private ImageView rightActor;
+
+    // Slider to change edge (radius) size of object
+    @FXML
+    private JFXSlider sliderSize;
+
+    // Text Input to change mass of object
+    @FXML
+    private TextField tfMass;
+
+    // Image of Cube
+    @FXML
+    private ImageView imageCube;
+
+    // Image of Cylinder
+    @FXML
+    private ImageView imageCylinder;
+
+    // Drag and drop On-road pane
+    @FXML
+    private StackPane stackPaneOnRoad;
+
+    // Drag and drop Cylinder pane
+    @FXML
+    private StackPane stackPaneCylinder;
+
+    // Drag and drop Cube pane
+    @FXML
+    private StackPane stackPaneCube;
 
     @FXML
     private ImageView actorRightArrow;
@@ -64,15 +89,9 @@ public class Controller {
 
     @FXML
     private void initialize() {
-        //setup resources
-        actor.setImage(new Image(getClass().getResourceAsStream("/resources/actor.png")));
-        standActor.setImage(new Image(getClass().getResourceAsStream("/resources/standActor.png")));
-        subroad1.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-        subroad2.setImage(new Image(getClass().getResourceAsStream("/resources/surface.png")));
-        actorRightArrow.setImage((new Image(getClass().getResourceAsStream("/resources/actorArrow.png"))));
-        actorLeftArrow.setImage((new Image(getClass().getResourceAsStream("/resources/actorArrow.png"))));
-        //play
-        playPressedBtn(new ActionEvent());
+
+        //reset all to init
+        //resetPressedBtn(new ActionEvent());
 
         //clipping pane
         Rectangle outputClip = new Rectangle();
@@ -82,24 +101,21 @@ public class Controller {
             outputClip.setHeight(newValue.getHeight());
         });
 
+
+
         //animate actor
-        SpriteTransition actorTransition = new SpriteTransition(actor,250,2,118,70,2,15, monitor);
-        actorTransition.play();
+        ActorAnimation actorAnimation = new ActorAnimation(standActor,leftActor,rightActor,Main.monitor,
+                new int[]{2, 118, 70, 2, 15},
+                new int[]{2, 118, 70, 3, 15});
 
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
-            monitor.getActorForce().setValue(t1.floatValue());
-            if (t1.intValue() == 0){
-                standActor.setVisible(true);
-                actor.setVisible(false);
-            } else if (t1.intValue() != 0){
-                actor.setVisible(true);
-                standActor.setVisible(false);
-            }
+            Main.monitor.getActorForce().setValue(t1.floatValue());
+            actorAnimation.update();
         });
 
         //animate surface
-        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, monitor);
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background,0.1F);
         surfaceAnimation.start();
         //add arrows listeners
         //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
@@ -115,24 +131,43 @@ public class Controller {
 
     @FXML
     public void playPressedBtn(ActionEvent e) {
-        monitor.cont();
+        Main.monitor.cont();
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
 
     @FXML
     public void pausePressedBtn(ActionEvent e) {
-        monitor.pause();
+        Main.monitor.pause();
         pauseBtn.setDisable(true);
         playBtn.setDisable(false);
     }
 
     @FXML
     public void resetPressedBtn(ActionEvent e) {
-        monitor.reset();
-        //forceSlider.setValue(0);
+        Main.monitor.reset();
+        forceSlider.setValue(0);
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
 
+    @FXML
+    void mouseDragExited(DragEvent e) {
+        System.out.println("DragExited");
+    }
+
+    @FXML
+    void mouseDragOver(DragEvent e) {
+        System.out.println("DragOver");
+    }
+
+    @FXML
+    void mouseDragDropped(DragEvent e) {
+        System.out.println("DragDropped");
+    }
+
+    @FXML
+    void mouseDragDetected(DragEvent e) {
+        System.out.println("DragDetected");
+    }
 }

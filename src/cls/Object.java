@@ -13,9 +13,13 @@ public abstract class Object {
         return velocity;
     }
 
-    public void setMass(float mass) {
-        this.mass = mass;
-        System.out.println("mass is now set to " + this.mass);
+    public void setMass(float mass) throws Exception {
+        if (mass > 0) {
+            this.mass = mass;
+            System.out.println("mass is now set to " + this.mass);
+        } else {
+            throw new Exception("Object's mass must > 0");
+        }
     }
 
     public void setVelocity(float velocity) {
@@ -33,7 +37,7 @@ public abstract class Object {
         return force.getValue() / mass;
     }
 
-    public Object(float mass) {
+    public Object(float mass) throws Exception {
         this.setMass(mass);
         this.setVelocity(0);
         System.out.println("Object is constructed");

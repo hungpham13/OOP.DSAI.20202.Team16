@@ -5,9 +5,6 @@
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Point3D?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
@@ -16,22 +13,67 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="238.0" prefWidth="400.0" style="-fx-background-color: white;">
+            <BorderPane prefHeight="238.0" prefWidth="185.0" style="-fx-background-color: white;">
                <HBox.margin>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </HBox.margin>
                <effect>
-                  <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="5.0" radius="14.5" width="30.0">
+                  <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
                      <color>
-                        <Color red="0.3176470696926117" green="0.3176470696926117" blue="0.3176470696926117" opacity="0.5" />
+                        <Color red="0.3100000023841858" green="0.3100000023841858" blue="0.3100000023841858" opacity="0.5" />
                      </color>
                   </DropShadow>
                </effect>
-            </Pane>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <center>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <StackPane fx:id="stackPaneCylinder" onDragDetected="#mouseDragDetected" onDragDropped="#mouseDragDropped" onDragExited="#mouseDragExited" onDragOver="#mouseDragOver" onMouseDragOver="#mouseDragOver" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
+                           <children>
+                              <JFXSlider fx:id="sliderSize" />
+                              <Label text="Size" />
+                              <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" onDragDetected="#mouseDragDetected" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/cylinder.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <effect>
+                              <InnerShadow blurType="GAUSSIAN" height="20.0" radius="9.5" width="20.0">
+                                 <color>
+                                    <Color red="0.30000001192092896" green="0.30000001192092896" blue="0.30000001192092896" opacity="0.5" />
+                                 </color>
+                              </InnerShadow>
+                           </effect>
+                        </StackPane>
+                        <StackPane fx:id="stackPaneCube" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
+                           <children>
+                              <TextField fx:id="tfMass" prefHeight="24.0" prefWidth="119.0" />
+                              <Label text="Mass" />
+                              <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/cube.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <effect>
+                              <InnerShadow blurType="GAUSSIAN" height="20.0" radius="9.5" width="20.0">
+                                 <color>
+                                    <Color red="0.30000001192092896" green="0.30000001192092896" blue="0.30000001192092896" opacity="0.5" />
+                                 </color>
+                              </InnerShadow>
+                           </effect>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
             <Pane layoutX="41.0" layoutY="41.0" prefWidth="360.0" style="-fx-background-color: white;">
                <effect>
                   <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
@@ -42,7 +84,7 @@
                </effect>
                <children>
                   <JFXCheckBox layoutX="65.0" layoutY="64.0" />
-                  <JFXSlider fx:id="forceSlider" layoutX="67.0" layoutY="192.0" min="-100.0" prefHeight="37.0" prefWidth="222.0" showTickLabels="true" showTickMarks="true" />
+                  <JFXSlider fx:id="forceSlider" layoutX="67.0" layoutY="192.0" min="-100.0" onDragDropped="#setForceOnDrop" prefHeight="37.0" prefWidth="222.0" showTickLabels="true" showTickMarks="true" />
                   <JFXToggleButton layoutX="35.0" layoutY="95.0" />
                </children>
                <HBox.margin>
@@ -68,31 +110,62 @@
       </HBox>
    </bottom>
    <center>
-      <Pane style="-fx-background-color: ECEDEF;" BorderPane.alignment="CENTER">
-         <effect>
-            <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
-               <color>
-                  <Color red="0.30980393290519714" green="0.30980393290519714" blue="0.30980393290519714" opacity="0.5" />
-               </color>
-            </DropShadow>
-         </effect>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ECEDEF;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin>
-         <children>
-            <Pane fx:id="displayPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="290.0" prefWidth="1220.0">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
+               <color>
+                  <Color red="0.3176470696926117" green="0.3176470696926117" blue="0.3176470696926117" opacity="0.5" />
+               </color>
+            </DropShadow>
+         </effect>
+         <center>
+            <Pane fx:id="displayPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="290.0" prefWidth="1220.0" BorderPane.alignment="CENTER">
                <children>
                   <Group fx:id="road" layoutX="-25.0" layoutY="212.0">
                      <children>
-                        <ImageView fx:id="subroad1" fitHeight="75.0" fitWidth="1722.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="subroad2" fitHeight="75.0" fitWidth="1722.0" layoutX="1690.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="75.0" fitWidth="1722.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/surface.png" />
+                           </image></ImageView>
+                        <ImageView fitHeight="75.0" fitWidth="1722.0" layoutX="1690.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/surface.png" />
+                           </image></ImageView>
                      </children>
                   </Group>
-                  <ImageView fx:id="actor" fitHeight="71.0" fitWidth="140.0" layoutX="358.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="standActor" fitHeight="104.0" fitWidth="117.0" layoutX="358.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
+                  <Group fx:id="background" layoutY="25.0">
+                     <children>
+                        <ImageView fitHeight="185.0" fitWidth="2355.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/background.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="185.0" fitWidth="2355.0" layoutX="2600.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/background.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <ImageView fx:id="leftActor" fitHeight="71.0" fitWidth="140.0" layoutX="358.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resources/leftActor.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="standActor" fitHeight="104.0" fitWidth="117.0" layoutX="358.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/standActor.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="rightActor" fitHeight="71.0" fitWidth="140.0" layoutX="700.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../resources/rightActor.png" />
+                     </image></ImageView>
                   <JFXButton fx:id="playBtn" buttonType="RAISED" defaultButton="true" layoutX="1070.0" layoutY="25.0" onAction="#playPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/play.png);" />
-                  <JFXButton fx:id="pauseBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="1145.0" layoutY="25.0" onAction="#pausePressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/pause.png);" viewOrder="2.0" />
-                  <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" viewOrder="2.0" />
+                  <JFXButton fx:id="pauseBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="1145.0" layoutY="25.0" onAction="#pausePressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/pause.png);" />
+                  <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" />
+                  <StackPane fx:id="stackPaneOnRoad" layoutX="538.0" layoutY="128.0" prefHeight="145.0" prefWidth="145.0" />
                   <ImageView fx:id="totalForceLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="totalForceRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="actorLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="144.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
@@ -113,7 +186,7 @@
                   <ImageView fx:id="fricRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true" />
                </children>
             </Pane>
-         </children>
-      </Pane>
+         </center>
+      </BorderPane>
    </center>
 </BorderPane>

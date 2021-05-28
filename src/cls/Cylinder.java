@@ -3,10 +3,10 @@ package cls;
 public class Cylinder extends Object {
 
     private float radius;
-    private float MAXIMUM_THRES = 1;
+    private final float MAXIMUM_THRES = 1;
     float angle;
 
-    public Cylinder(float mass, float radius) {
+    public Cylinder(float mass, float radius) throws Exception {
         super(mass);
         this.setRadius(radius);
         System.out.println("Cylinder is constructed");
@@ -56,12 +56,4 @@ public class Cylinder extends Object {
         this.setAngle(this.angle + (newAngularVelocity * newAngularVelocity - oldAngularVelocity * oldAngularVelocity) / (2 * a));
     }
 
-    public static void main(String[] args) {
-        Force f1 = new Force(20);
-        Force f2 = new Force(10);
-        Cylinder obj = new Cylinder(10, 0.5f);
-        obj.applyForce(f1, 5);
-        obj.applyForce(f2, 5);
-
-    }
 }
