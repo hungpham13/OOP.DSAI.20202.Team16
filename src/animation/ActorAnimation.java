@@ -20,9 +20,8 @@ public class ActorAnimation {
         this.monitor = monitor;
         this.leftActorPara = leftActorPara;
         this.rightActorPara = rightActorPara;
-
-        //animate the left and right actor
     }
+
     public void update(){
         //call this method when the actor force value in monitor is changed
         float forceValue = monitor.getActorForce().getValue();

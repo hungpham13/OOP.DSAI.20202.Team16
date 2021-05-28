@@ -1,5 +1,6 @@
 package cls;
 
+
 public class Monitor {
     private Object obj = null;
     private boolean playing = true;
