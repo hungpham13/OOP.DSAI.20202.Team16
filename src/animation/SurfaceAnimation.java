@@ -12,8 +12,8 @@ public class SurfaceAnimation extends AnimationTimer {
     private final Group background;
     private final Pane displayPane;
     private final Monitor monitor;
-    private final double backgroundVelocityRate = 0.1;
-    private final int UNIT = 260; //define pixel length of 1 meter on screen
+    private static final double backgroundVelocityRate = 0.1;
+    private static final int UNIT = 260; //define pixel length of 1 meter on screen
 
     public SurfaceAnimation(Group road, Pane displayPane, Monitor monitor, Group background) {
         this.road = road;
