@@ -4,7 +4,7 @@ public class Cylinder extends Object {
 
     private float radius;
     private final float MAXIMUM_THRES = 1;
-    float angle;
+    float angle = 0;
 
     public Cylinder(float mass, float radius) throws Exception {
         super(mass);
@@ -34,7 +34,7 @@ public class Cylinder extends Object {
     }
 
     public void setRadius(float radius) {
-        if (radius < this.MAXIMUM_THRES) {
+        if (radius <= this.MAXIMUM_THRES) {
             this.radius = radius;
             System.out.println("radius is now set to " + this.radius);
         }
@@ -53,7 +53,9 @@ public class Cylinder extends Object {
         super.applyForce(force, time);
         float newAngularVelocity = this.getAngularVelocity();
         float a = this.getAngularAcceleration(force);
-        this.setAngle(this.angle + (newAngularVelocity * newAngularVelocity - oldAngularVelocity * oldAngularVelocity) / (2 * a));
+        if (a != 0) {
+            this.setAngle(this.angle + (newAngularVelocity * newAngularVelocity - oldAngularVelocity * oldAngularVelocity) / (2 * a));
+        }
     }
 
 }

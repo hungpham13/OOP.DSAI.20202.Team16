@@ -1,9 +1,6 @@
 package screen;
 
-import cls.Cube;
-import cls.Force;
-import cls.Monitor;
-import cls.Surface;
+import cls.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +22,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws Exception {
-        monitor = new Monitor(new Cube(12,0.5f), new Surface(0.2f, 0.3f), new Force(0));
+        monitor = new Monitor(new Cylinder(12,0.5f), new Surface(0.2f, 0.3f), new Force(0));
         launch(args);
     }
 }
