@@ -47,9 +47,10 @@ public class Cylinder extends Object {
 
     public void setAngle(float angle) {
         this.angle.setValue(angle);
-        System.out.println("angle is now set to " + this.angle);
+        System.out.println("angle is now set to " + this.angle.getValue());
     }
 
+    @Override
     public void applyForce(Force force, float time) {
         float oldAngularVelocity = this.getAngularVelocity();
         super.applyForce(force, time);
@@ -59,8 +60,7 @@ public class Cylinder extends Object {
             this.setAngle(this.angle.getValue() + (newAngularVelocity * newAngularVelocity - oldAngularVelocity * oldAngularVelocity) / (2 * a));
         }
     }
-
-    public SimpleFloatProperty getAngleProperty() {
+    public SimpleFloatProperty getAngleProperty(){
         return angle;
     }
 

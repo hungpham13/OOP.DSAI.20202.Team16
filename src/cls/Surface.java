@@ -1,34 +1,43 @@
 package cls;
 
+import javafx.beans.property.SimpleFloatProperty;
+
 public class Surface {
-    private float staticCoef;
-    private float kineticCoef;
+    private SimpleFloatProperty staticCoef = new SimpleFloatProperty();
+    private SimpleFloatProperty kineticCoef = new SimpleFloatProperty();
 
     public Surface(float staticCoef, float kineticCoef) {
-        this.staticCoef = staticCoef;
-        this.kineticCoef = kineticCoef;
+        this.staticCoef.setValue(staticCoef);
+        this.kineticCoef.setValue(kineticCoef);
     }
 
+    public SimpleFloatProperty getStaticCoefProperty() {
+        return staticCoef;
+    }
+
+    public SimpleFloatProperty getKineticCoefProperty() {
+        return kineticCoef;
+    }
 
     public float getStaticFrictionCoef() {
-        return staticCoef;
+        return staticCoef.getValue();
     }
 
     public void setStaticFrictionCoef(float staticCoef) throws Exception {
         if (0 <= staticCoef && staticCoef<=1){
-            this.staticCoef = staticCoef;
+            this.staticCoef.setValue(staticCoef);
         } else {
             throw new Exception("The coefficient must be between 0 and 1");
         }
     }
 
     public float getKineticFrictionCoef() {
-        return kineticCoef;
+        return kineticCoef.getValue();
     }
 
     public void setKineticFrictionCoef(float kineticCoef) throws Exception {
         if (0 <= kineticCoef && kineticCoef<=1) {
-            this.kineticCoef = kineticCoef;
+            this.kineticCoef.setValue(kineticCoef);
         } else {
             throw new Exception("The coefficient must be between 0 and 1");
         }

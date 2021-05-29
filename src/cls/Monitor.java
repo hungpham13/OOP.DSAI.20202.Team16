@@ -6,12 +6,25 @@ public class Monitor {
     private boolean playing = true;
     private final Surface surface;
     private final Force actor;
-
+    private final Force frictionForce = new Force(0);
+    private final Force totalForce;
 
     public Monitor(Object obj, Surface surface, Force actor) {
         this.obj = obj;
         this.surface = surface;
         this.actor = actor;
+        this.totalForce = actor.plus(frictionForce);
+
+        //add listener for friction and total force
+        this.obj.getMassProperty().addListener(observable -> updateFrictionForce());
+        this.obj.getVelocityProperty().addListener(observable ->updateFrictionForce());
+        this.surface.getStaticCoefProperty().addListener(observable ->updateFrictionForce());
+        this.surface.getKineticCoefProperty().addListener(observable ->updateFrictionForce());
+        this.actor.getValueProperty().addListener(observable -> {
+            updateFrictionForce();
+            this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue());
+        });
+        this.frictionForce.getValueProperty().addListener(observable -> this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue()));
     }
 
     public boolean isPlaying() {
@@ -25,6 +38,7 @@ public class Monitor {
     public boolean isEmpty(){
         return obj == null;
     }
+
     public void setObj(Object newObj) {
         obj = newObj;
     }
@@ -34,26 +48,35 @@ public class Monitor {
     public Force getActorForce(){
         return actor;
     }
-    public Force getFrictionForce(Force actor){
-        Force frictionForce = new Force();
-        float normalForce = 10*obj.getMass();
-        if (obj instanceof Cube ) {
-            if (Math.abs(actor.getValue()) <= (normalForce*surface.getStaticFrictionCoef())) {
-                if (Math.round(obj.getVelocity()) == 0) {frictionForce.setValue(- actor.getValue());
-            } else {frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce*surface.getKineticFrictionCoef());
+    public Surface getSurface(){
+        return surface;
+    }
+
+    public void updateFrictionForce() {
+        float normalForce = 10 * obj.getMass();
+        if (obj instanceof Cube) {
+            if (Math.abs(actor.getValue()) <= (normalForce * surface.getStaticFrictionCoef())) {
+                if (Math.round(obj.getVelocity()) == 0) {
+                    frictionForce.setValue(-actor.getValue());
+                } else {
+                    frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
                 }
             } else {
-                frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce*surface.getKineticFrictionCoef());
+                frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
             }
         } else if (obj instanceof Cylinder) {
-            if (Math.abs(actor.getValue()) <= (3*normalForce*surface.getStaticFrictionCoef())) {
-                if (Math.round(obj.getVelocity()) == 0) {frictionForce.setValue(- actor.getValue()/3);}
-            } else {frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce*surface.getKineticFrictionCoef());}
+            if (Math.abs(actor.getValue()) <= (3 * normalForce * surface.getStaticFrictionCoef())) {
+                if (Math.round(obj.getVelocity()) == 0) {
+                    frictionForce.setValue(-actor.getValue() / 3);
+                }
+            } else {
+                frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
+            }
         } else {
-            frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce * surface.getKineticFrictionCoef());
+            frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
         }
-        return frictionForce;
     }
+
     public void pause(){
         playing = false;
     }
@@ -64,5 +87,21 @@ public class Monitor {
         actor.setValue(0);
         setObj(null);
         playing = true;
+    }
+
+    public float getObjAcceleration(){
+        return obj.getAcceleration(totalForce);
+    }
+
+    public Force getFrictionForce() {
+        return frictionForce;
+    }
+
+    public void appliedForceToObjInTime(float t){
+        obj.applyForce(totalForce, t);
+    }
+
+    public Force getTotalForce() {
+        return this.totalForce;
     }
 }

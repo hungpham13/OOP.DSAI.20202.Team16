@@ -1,12 +1,15 @@
 package screen;
 
 import animation.*;
+import cls.Cylinder;
+import animation.*;
 import cls.Cube;
 import cls.Cylinder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableStringValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
@@ -24,12 +27,19 @@ public class Controller {
 
     @FXML
     private JFXSlider forceSlider;
+    @FXML
+    private JFXSlider kineticSlider;
+    @FXML
+    private JFXSlider staticSlider;
+
 
     @FXML
     private Group road;
 
     @FXML
     private Group background;
+//Upload an image to customize your repository’s social media preview.
+
 
     @FXML
     private ImageView standActor;
@@ -89,6 +99,18 @@ public class Controller {
     private ImageView totalForceRightArrow;
 
     @FXML
+    private Label forceValueLabel;
+    @FXML
+    private Label accelerationLabel;
+    @FXML
+    private Label velocityLabel;
+    @FXML
+    private Label frictionForceLabel;
+    @FXML
+    private Label totalForceLabel;
+
+
+    @FXML
     private void initialize() {
 
         //reset all to init
@@ -102,6 +124,41 @@ public class Controller {
             outputClip.setHeight(newValue.getHeight());
         });
 
+        //bind force value with label
+        ObservableStringValue formattedForceValue = Bindings.createStringBinding(()->
+                "Actor Force: " + monitor.getActorForce().getValue() + " N",
+                monitor.getActorForce().getValueProperty());
+        forceValueLabel.textProperty().bind(formattedForceValue);
+        //bind force value with label
+        ObservableStringValue formattedTotal = Bindings.createStringBinding(()->
+                        "Total Force: " + monitor.getTotalForce().getValue() + " N",
+                monitor.getTotalForce().getValueProperty());
+        totalForceLabel.textProperty().bind(formattedTotal);
+        //bind force value with label
+        ObservableStringValue formattedFriction = Bindings.createStringBinding(()->
+                        "Friction Force: " + monitor.getFrictionForce().getValue() + " N",
+                monitor.getFrictionForce().getValueProperty());
+        frictionForceLabel.textProperty().bind(formattedFriction);
+
+
+        //bind acceleration with label
+        ObservableStringValue formattedAcceleration = Bindings.createStringBinding(()->
+                        "Acceleration: " + monitor.getObjAcceleration() + " m/s2",
+                monitor.getObj().getMassProperty(),monitor.getActorForce().getValueProperty());
+        accelerationLabel.textProperty().bind(formattedAcceleration);
+
+        //bind velocity with label
+        ObservableStringValue formattedVelocity = Bindings.createStringBinding(()->
+                        "Velocity: " + monitor.getObj().getVelocity() + " m/s",
+                monitor.getObj().getVelocityProperty());
+        velocityLabel.textProperty().bind(formattedVelocity);
+
+        //lbDropOnRoad.setVisible(false);
+        if (monitor.getObj() instanceof Cylinder) {
+            Cylinder c = (Cylinder) monitor.getObj();
+            c.getAngleProperty().addListener(observable -> imageCylinder.setRotate(c.getAngle()));
+        }
+
         //animate actor
         ActorAnimation actorAnimation = new ActorAnimation(standActor,leftActor,rightActor,Main.monitor,
                 new int[]{2, 118, 70, 2, 15},
@@ -110,7 +167,21 @@ public class Controller {
         //add listener to force slider
         forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
             Main.monitor.getActorForce().setValue(t1.floatValue());
-            actorAnimation.update();
+        });
+        //add listener to surface coefficient slider
+        kineticSlider.valueProperty().addListener((observableValue, number, t1) -> {
+            try {
+                Main.monitor.getSurface().setKineticFrictionCoef(t1.floatValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        staticSlider.valueProperty().addListener((observableValue, number, t1) -> {
+            try {
+                Main.monitor.getSurface().setStaticFrictionCoef(t1.floatValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         // Initially, there's no object in the road
@@ -139,14 +210,17 @@ public class Controller {
         });
 
         //animate surface
-        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background,0.1F);
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background);
         surfaceAnimation.start();
         //add arrows listeners
         //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
           //  monitor.getActorForce().setValue(t1.floatValue());});
         //display arrows
-        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow, fricLeftArrow, fricRightArrow, totalForceLeftArrow, totalForceRightArrow);
-        arrowAnimation.start();
+        AnimationArrow actorArrowAnimation = new AnimationArrow(monitor.getActorForce(), actorLeftArrow, actorRightArrow);
+        AnimationArrow fricArrowAnimation = new AnimationArrow(monitor.getFrictionForce(), fricLeftArrow, fricRightArrow);
+        AnimationArrow totalArrowAnimation = new AnimationArrow(monitor.getTotalForce(), totalForceLeftArrow, totalForceRightArrow);
+
+        //arrowAnimation.start();
         }
     @FXML
     private JFXButton playBtn;
@@ -270,9 +344,4 @@ public class Controller {
 //        System.out.println("DragDone");
 //        dragEvent.consume();
 //    }
-
-    @FXML
-    public void setForceOnDrop() {
-
-    }
 }
