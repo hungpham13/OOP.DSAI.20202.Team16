@@ -20,6 +20,25 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.geometry.Rectangle2D?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
@@ -42,15 +61,10 @@
                <center>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <StackPane fx:id="stackPaneCylinder" onDragDetected="#mouseDragDetected" onDragDropped="#mouseDragDropped" onDragExited="#mouseDragExited" onDragOver="#mouseDragOver" onMouseDragOver="#mouseDragOver" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
+                        <StackPane fx:id="stackPaneCylinder" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
                            <children>
                               <JFXSlider fx:id="sliderSize" />
                               <Label text="Size" />
-                              <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" onDragDetected="#mouseDragDetected" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../resources/cylinder.png" />
-                                 </image>
-                              </ImageView>
                            </children>
                            <effect>
                               <InnerShadow blurType="GAUSSIAN" height="20.0" radius="9.5" width="20.0">
@@ -64,11 +78,6 @@
                            <children>
                               <TextField fx:id="tfMass" prefHeight="24.0" prefWidth="119.0" />
                               <Label text="Mass" />
-                              <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../resources/cube.jpg" />
-                                 </image>
-                              </ImageView>
                            </children>
                            <effect>
                               <InnerShadow blurType="GAUSSIAN" height="20.0" radius="9.5" width="20.0">
@@ -106,11 +115,22 @@
                   <Insets bottom="30.0" right="30.0" top="30.0" />
                </HBox.margin>
                <children>
+                  <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onDragDropped="#onDragDropped" onDragEntered="#onDragEntered" onDragExited="#onDragExited" onDragOver="#onDragOver" onMouseDragged="#onMouseDragged" onMouseExited="#onMouseExited" onMousePressed="#onMousePressed" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/cube.jpg" />
+                     </image>
+                  </ImageView>
                   <JFXSlider layoutX="88.0" layoutY="246.0" prefHeight="15.0" prefWidth="224.0" />
                   <JFXToggleButton layoutX="247.0" layoutY="72.0" text="Mass" />
                   <JFXSlider fx:id="forceSlider" layoutX="56.0" layoutY="164.0" min="-100.0" prefHeight="38.0" prefWidth="316.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                   <JFXCheckBox layoutX="29.0" layoutY="37.0" />
                   <JFXTextArea layoutX="29.0" layoutY="37.0" prefHeight="112.0" prefWidth="351.0" />
+                  <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" layoutX="350.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onDragDropped="#onDragDropped" onDragEntered="#onDragEntered" onDragExited="#onDragExited" onDragOver="#onDragOver" onMouseDragged="#onMouseDragged" onMouseExited="#onMouseExited" onMousePressed="#onMousePressed" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                                        <Image url="@../resources/cylinder.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" layoutX="249.0" layoutY="189.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onDragDropped="#onDragDropped" onDragEntered="#onDragEntered" onDragExited="#onDragExited" onDragOver="#onDragOver" onMouseDragged="#onMouseDragged" onMouseExited="#onMouseExited" onMousePressed="#onMousePressed" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
          </children>
