@@ -1,36 +1,37 @@
 package cls;
 
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableFloatValue;
 import javafx.beans.value.ObservableValue;
-
-import static screen.Main.monitor;
 
 public class Monitor {
     private Object obj = null;
     private boolean playing = true;
     private final Surface surface;
     private final Force actor;
-    private Force frictionForce;
-    private Force totalForce;
-
+    private final Force frictionForce = new Force(0);
+    private final Force totalForce;
 
     public Monitor(Object obj, Surface surface, Force actor) {
         this.obj = obj;
         this.surface = surface;
         this.actor = actor;
-        this.frictionForce = new Force(0);
         this.totalForce = actor.plus(frictionForce);
-        ObservableValue frictionForceValue = Bindings.createBooleanBinding(()->
-                updateFrictionForce(actor), obj.getMassProperty(),
-                surface.getStaticCoefProperty(), surface.getKineticCoefProperty(),
-                actor.getValueProperty(), obj.getVelocityProperty()
-                );
-        ObservableValue totalValue = Bindings.createBooleanBinding(() ->
-        {totalForce.setValue(actor.getValue()+frictionForce.getValue());
-            return true;}, frictionForce.getValueProperty(), actor.getValueProperty());
+
+        //add listener for friction and total force
+        this.obj.getMassProperty().addListener(observable -> updateFrictionForce(actor));
+        this.obj.getVelocityProperty().addListener(observable ->updateFrictionForce(actor));
+        this.surface.getStaticCoefProperty().addListener(observable ->updateFrictionForce(actor));
+        this.surface.getKineticCoefProperty().addListener(observable ->updateFrictionForce(actor));
+        this.actor.getValueProperty().addListener(observable -> {
+            updateFrictionForce(actor);
+            this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue());
+        });
+        this.frictionForce.getValueProperty().addListener(observable -> this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue()));
     }
 
     public boolean isPlaying() {
@@ -58,7 +59,7 @@ public class Monitor {
         return surface;
     }
 
-    public boolean updateFrictionForce(Force actor) {
+    public void updateFrictionForce(Force actor) {
         float normalForce = 10 * obj.getMass();
         if (obj instanceof Cube) {
             if (Math.abs(actor.getValue()) <= (normalForce * surface.getStaticFrictionCoef())) {
@@ -81,7 +82,6 @@ public class Monitor {
         } else {
             frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
         }
-        return true;
     }
 
     public void pause(){

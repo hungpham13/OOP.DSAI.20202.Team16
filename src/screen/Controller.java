@@ -1,15 +1,12 @@
 package screen;
 
 import animation.*;
-import cls.Object;
-import cls.Force;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableStringValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -18,12 +15,6 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-import java.util.Observable;
 
 import static screen.Main.monitor;
 
@@ -118,6 +109,10 @@ public class Controller {
     private Label accelerationLabel;
     @FXML
     private Label velocityLabel;
+    @FXML
+    private Label frictionForceLabel;
+    @FXML
+    private Label totalForceLabel;
 
 
     @FXML
@@ -136,9 +131,19 @@ public class Controller {
 
         //bind force value with label
         ObservableStringValue formattedForceValue = Bindings.createStringBinding(()->
-                "Force: " + monitor.getActorForce().getValue() + " N",
+                "Actor Force: " + monitor.getActorForce().getValue() + " N",
                 monitor.getActorForce().getValueProperty());
         forceValueLabel.textProperty().bind(formattedForceValue);
+        //bind force value with label
+        ObservableStringValue formattedTotal = Bindings.createStringBinding(()->
+                        "Total Force: " + monitor.getTotalForce().getValue() + " N",
+                monitor.getTotalForce().getValueProperty());
+        totalForceLabel.textProperty().bind(formattedTotal);
+        //bind force value with label
+        ObservableStringValue formattedFriction = Bindings.createStringBinding(()->
+                        "Friction Force: " + monitor.getFrictionForce().getValue() + " N",
+                monitor.getFrictionForce().getValueProperty());
+        frictionForceLabel.textProperty().bind(formattedFriction);
 
 
         //bind acceleration with label

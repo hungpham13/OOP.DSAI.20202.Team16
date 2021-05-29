@@ -94,10 +94,12 @@
                   <Insets bottom="30.0" right="30.0" top="30.0" />
                </HBox.margin>
                <children>
-                  <Slider blockIncrement="0.1" layoutX="65.0" layoutY="53.0" majorTickUnit="0.5" max="1.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.5" />
+                  <Slider blockIncrement="0.1" layoutX="83.0" layoutY="264.0" majorTickUnit="0.5" max="1.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.5" />
                   <Label fx:id="forceValueLabel" layoutX="135.0" layoutY="159.0" text="Label" />
                   <Label fx:id="accelerationLabel" layoutX="135.0" layoutY="192.0" text="Label" />
                   <Label fx:id="velocityLabel" layoutX="135.0" layoutY="221.0" text="Label" />
+                  <Label fx:id="frictionForceLabel" layoutX="135.0" layoutY="127.0" text="Label" />
+                  <Label fx:id="totalForceLabel" layoutX="135.0" layoutY="91.0" text="Label" />
                </children>
             </Pane>
             <BorderPane prefHeight="350.0" prefWidth="465.0" style="-fx-background-color: white;">
