@@ -32,7 +32,7 @@ public class SurfaceAnimation extends AnimationTimer {
     }
     private void moveSurface(Group road, float t, float velocityRate){
         if (monitor.isPlaying()) {
-            Force totalForce = monitor.getActorForce().plus(monitor.getFrictionForce());
+            Force totalForce = monitor.getActorForce().plus(monitor.getFrictionForce(monitor.getActorForce()));
             monitor.getObj().applyForce(totalForce, t);
             road.setLayoutX(road.getLayoutX() - t * velocityRate* monitor.getObj().getVelocity());
         }

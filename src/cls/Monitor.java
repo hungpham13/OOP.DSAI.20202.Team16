@@ -34,23 +34,23 @@ public class Monitor {
     public Force getActorForce(){
         return actor;
     }
-    public Force getFrictionForce(){
+    public Force getFrictionForce(Force actor){
         Force frictionForce = new Force();
         float normalForce = 10*obj.getMass();
         if (obj instanceof Cube ) {
-            if (actor.getValue() <= (normalForce*surface.getStaticFrictionCoef())) {
-                if (obj.getVelocity() == 0) {frictionForce.setValue(- actor.getValue());
-            } else {frictionForce.setValue(- normalForce*surface.getKineticFrictionCoef());
+            if (Math.abs(actor.getValue()) <= (normalForce*surface.getStaticFrictionCoef())) {
+                if (Math.round(obj.getVelocity()) == 0) {frictionForce.setValue(- actor.getValue());
+            } else {frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce*surface.getKineticFrictionCoef());
                 }
             } else {
-                frictionForce.setValue(- normalForce*surface.getKineticFrictionCoef());
+                frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce*surface.getKineticFrictionCoef());
             }
         } else if (obj instanceof Cylinder) {
-            if (actor.getValue() <= (3*normalForce*surface.getStaticFrictionCoef())) {
-                if (obj.getVelocity() == 0) {frictionForce.setValue(- actor.getValue()/3);}
-            } else {frictionForce.setValue(- normalForce*surface.getKineticFrictionCoef());}
+            if (Math.abs(actor.getValue()) <= (3*normalForce*surface.getStaticFrictionCoef())) {
+                if (Math.round(obj.getVelocity()) == 0) {frictionForce.setValue(- actor.getValue()/3);}
+            } else {frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce*surface.getKineticFrictionCoef());}
         } else {
-            frictionForce.setValue(-normalForce * surface.getKineticFrictionCoef());
+            frictionForce.setValue((- Math.signum(obj.getVelocity()))*normalForce * surface.getKineticFrictionCoef());
         }
         return frictionForce;
     }

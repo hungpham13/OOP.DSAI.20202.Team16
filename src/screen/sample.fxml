@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.geometry.Rectangle2D?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
@@ -10,7 +49,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -104,7 +143,7 @@
                <children>
                   <JFXSlider layoutX="88.0" layoutY="246.0" prefHeight="15.0" prefWidth="224.0" />
                   <JFXToggleButton layoutX="247.0" layoutY="72.0" text="Mass" />
-                  <JFXSlider fx:id="forceSlider" layoutX="56.0" layoutY="164.0" min="-100.0" onDragDropped="#setForceOnDrop" prefHeight="38.0" prefWidth="316.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                  <JFXSlider fx:id="forceSlider" layoutX="56.0" layoutY="164.0" min="-100.0" prefHeight="38.0" prefWidth="316.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                   <JFXCheckBox layoutX="29.0" layoutY="37.0" />
                   <JFXTextArea layoutX="29.0" layoutY="37.0" prefHeight="112.0" prefWidth="351.0" />
                </children>
@@ -175,8 +214,20 @@
                         <JFXButton fx:id="playBtn" buttonType="RAISED" defaultButton="true" layoutX="1070.0" layoutY="25.0" onAction="#playPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/play.png);" />
                         <JFXButton fx:id="pauseBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="1145.0" layoutY="25.0" onAction="#pausePressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/pause.png);" />
                         <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" />
-                        <ImageView fx:id="totalForceLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="totalForceRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="totalForceRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="89.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/actorArrow.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="50.0" minY="50.0" />
+                           </viewport></ImageView>
+                        <ImageView fx:id="totalForceLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="89.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
+                           <viewport>
+                              <Rectangle2D height="50.0" minY="50.0" />
+                           </viewport>
+                           <image>
+                              <Image url="@../resources/actorArrow.png" />
+                           </image></ImageView>
                         <ImageView fx:id="actorLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="144.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
                            <viewport>
                               <Rectangle2D height="50.0" minY="50.0" />
@@ -193,14 +244,20 @@
                               <Image url="@../resources/actorArrow.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="fricLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="fricLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="144.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/actorArrow.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="50.0" minY="50.0" />
+                           </viewport></ImageView>
                         <ImageView fx:id="fricRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true" />
                         <StackPane layoutX="538.0" layoutY="90.0" prefHeight="145.0" prefWidth="145.0" />
                      </children>
                   </Pane>
                   <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/pause.png" />
+                        <Image url="@../resources/actorArrow.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lbDropOnRoad" text="DROP OBJECT ON THE ROAD" textFill="#6f6f6f">
