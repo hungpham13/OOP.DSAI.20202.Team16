@@ -2,6 +2,9 @@ package screen;
 
 import animation.*;
 import cls.Cylinder;
+import animation.*;
+import cls.Cube;
+import cls.Cylinder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.beans.binding.Bindings;
@@ -9,7 +12,6 @@ import javafx.beans.value.ObservableStringValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -19,11 +21,6 @@ import javafx.scene.control.*;
 import static screen.Main.monitor;
 
 public class Controller {
-
-    private double prevItemX;
-    private double prevItemY;
-    private double prevMouseX;
-    private double prevMouseY;
 
     @FXML
     private Pane displayPane;
@@ -67,21 +64,19 @@ public class Controller {
     @FXML
     public ImageView imageCylinder;
 
+    // Image of the object on the
     @FXML
     private ImageView imageOnRoad;
 
-    // Drag and drop On-road pane
+    // Pane that contains Cylinder
     @FXML
-    private StackPane stackPaneOnRoad;
+    private Pane paneCylinder;
 
-    // Drag and drop Cylinder pane
+    // Pane that contains Cube
     @FXML
-    private StackPane stackPaneCylinder;
+    private Pane paneCube;
 
-    // Drag and drop Cube pane
-    @FXML
-    private StackPane stackPaneCube;
-
+    // Label that show hint when putting image on the road
     @FXML
     private Label lbDropOnRoad;
 
@@ -189,6 +184,31 @@ public class Controller {
             }
         });
 
+        // Initially, there's no object in the road
+        lbDropOnRoad.setVisible(false);
+        imageOnRoad.setVisible(false);
+        // Set default size is half as large as MAXIMUM_THRES. Change size via a slider.
+        sliderSize.setMin(5);
+        sliderSize.setMax(7);
+        sliderSize.setValue(5);
+        sliderSize.setBlockIncrement(1);
+        sliderSize.setOnMouseDragged(mouseEvent -> {
+            float scale = (float) sliderSize.getValue();
+            System.out.println("Scale" + scale);
+            imageOnRoad.setScaleX(scale/5);
+            imageOnRoad.setScaleY(scale/5);
+            imageOnRoad.setLayoutY(90 + 145 - imageOnRoad.getFitHeight());
+            imageOnRoad.setLayoutX(510 + 145/2 - imageOnRoad.getFitWidth()/2);
+        });
+        // User input the mass of the object via a text field.
+        tfMass.setOnAction(actionEvent -> {
+            try {
+                monitor.getObj().setMass(Float.parseFloat(tfMass.getText()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         //animate surface
         SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background);
         surfaceAnimation.start();
@@ -229,109 +249,99 @@ public class Controller {
         pauseBtn.setDisable(false);
     }
 
-    @FXML
-    public void onMousePressed(MouseEvent mouseEvent){
-        System.out.println("Pressed");
-        ImageView obj = (ImageView) mouseEvent.getSource();
-        prevItemX = obj.getLayoutX();
-        prevItemY = obj.getLayoutY();
-        prevMouseX = mouseEvent.getX();
-        prevMouseY = mouseEvent.getY();
-    }
-    @FXML
-    public void onMouseExited(MouseEvent mouseEvent) {
-        System.out.println("MouseExited");
-        lbDropOnRoad.setVisible(false);
-        if (mouseEvent.getSource() == imageCylinder) {
-            imageCube.setVisible(true);
-        }
-        else {
-            imageCylinder.setVisible(true);
-        }
-        // What if we drop the imageView in the road? We must hide cube and cylinder, not visible
-    }
+    // Variable control if in object is successfully dropped on to the road
+    boolean dropToRoadSucceed;
+
+    // Handle event: an image is pressed by mouse
+//    @FXML
+//    public void onMousePressed(MouseEvent mouseEvent){
+//        System.out.println("Pressed");
+//        ImageView obj = (ImageView) mouseEvent.getSource();
+//        mouseEvent.consume();
+//    }
+
+    // Handle event: an image is dragged
     @FXML
     public void onDragDetected(MouseEvent mouseEvent){
-        // If the ImageView is caught dragged, we copy its image to clipboard for later transfer.
         System.out.println("DragDetected");
+        dropToRoadSucceed = false;
         ImageView obj = (ImageView) mouseEvent.getSource();
-        Dragboard db = obj.startDragAndDrop(TransferMode.MOVE);
-        ClipboardContent content = new ClipboardContent();
-        content.putImage(obj.getImage());
-        db.setDragView(obj.getImage());
-        db.setContent(content);
-        System.out.println("OKKKKKKKKK");
-        System.out.println("DBBBBBBBBBBB: " + db.hasImage());
+        obj.startFullDrag();
+
         mouseEvent.consume();
     }
+
+    // Handle event: an image is BEING dragged
     @FXML
-    public void onMouseDragged(MouseEvent mouseEvent){
-//        System.out.println("MouseDragged");
+    public synchronized void onMouseDragged(MouseEvent mouseEvent){
+        System.out.println("MouseDragged");
         lbDropOnRoad.setVisible(true);
         ImageView obj = (ImageView) mouseEvent.getSource();
-        if (obj == imageCylinder) {
-            // if we are dragging cylinder, we hide cube
+
+        imageCylinder.setVisible(false);
+        imageCube.setVisible(false);
+        imageOnRoad.setVisible(false);
+
+        mouseEvent.consume();
+    }
+
+    // Handle event: a dragging mouse entered above a pane.
+//    @FXML
+//    public void onMouseDragEntered(MouseDragEvent mouseDragEvent) {
+//        System.out.println("MouseDragEntered");
+//        mouseDragEvent.consume();
+//    }
+
+    // Handle event: a image is released from being dragged by the mouse
+    @FXML
+    public void onMouseReleased(MouseEvent mouseEvent) {
+        System.out.println("MouseReleased");
+        lbDropOnRoad.setVisible(false);
+        if (dropToRoadSucceed) {
+            imageOnRoad.setVisible(true);
             imageCube.setVisible(false);
-        }
-        else if (obj == imageCube) {
-            // if we are dragging cube, we hide cylinder
             imageCylinder.setVisible(false);
-        } else if (obj == imageOnRoad) {
-            // If we are dragging on-road object, we hide both cube and cylinder. Actually we don' need to code anything
-        }
-        double diffX = mouseEvent.getX() - prevMouseX;
-        double diffY = mouseEvent.getY() - prevMouseY;
-        obj.setTranslateX(obj.getTranslateX() + diffX);
-        obj.setTranslateY(obj.getTranslateY() + diffY);
-    }
-
-    @FXML
-    public void onDragEntered(DragEvent dragEvent) {
-        System.out.println("DragEntered");
-        dragEvent.consume();
-    }
-    @FXML
-    public void onDragExited(DragEvent dragEvent) {
-        System.out.println("DragExited");
-        dragEvent.consume();
-    }
-
-    @FXML
-    public void onDragOver(DragEvent dragEvent) {
-        System.out.println("DragOver");
-        if (dragEvent.getSource() == imageCylinder || dragEvent.getSource() == imageCube) {
-            dragEvent.acceptTransferModes(TransferMode.ANY);
-        }
-        dragEvent.consume();
-    }
-
-    @FXML
-    public void onDragDropped(DragEvent dragEvent) {
-        System.out.println("DragDropped");
-        Dragboard db = dragEvent.getDragboard();
-        boolean success = false;
-        if (dragEvent.getTarget() == imageOnRoad) {
-            // If we're dropping on to road, set the dragged obj's image as on-road image
-            imageOnRoad.setImage(db.getImage());
-            success = true;
         }
         else {
-            imageCylinder.setImage(new Image("/resources/cylinder.png"));
-            imageCube.setImage(new Image("/resources/cube.jpg"));
-            success = true;
+            imageCube.setVisible(true);
+            imageCylinder.setVisible(true);
+            imageOnRoad.setVisible(false);
         }
-        dragEvent.setDropCompleted(success);
-        dragEvent.consume();
+        mouseEvent.consume();
     }
 
+    // Handle event: a dragging mouse is hovering above a pane
+//    @FXML
+//    public void onMouseDragOver(MouseDragEvent mouseDragEvent) {
+//        if (mouseDragEvent.getTarget() == displayPane || mouseDragEvent.getTarget() == paneCube || mouseDragEvent.getTarget() == paneCylinder) {
+//            System.out.println("MouseDragOver");
+//        }
+//        mouseDragEvent.consume();
+//    }
+
+    // Handle event: the mouse dropped an image on to a pane
     @FXML
-    public void onDragDone(DragEvent dragEvent){
-        System.out.println("DragDone");
-        // TODO Clear image from source
+    public void onMouseDragReleased(MouseDragEvent mouseDragEvent) throws Exception {
+        System.out.println("MouseDragReleased");
+        if (mouseDragEvent.getTarget() == displayPane) {
+            dropToRoadSucceed = true;
+            imageOnRoad.setImage(((ImageView) mouseDragEvent.getGestureSource()).getImage());
+            if (mouseDragEvent.getGestureSource() == imageCylinder) {
+                Cylinder c = new Cylinder(20, 0.5f);
+                monitor.setObj(c);
+                c.getAngleProperty().addListener(observable -> imageOnRoad.setRotate(c.getAngle())); // set image on the road as rotatable
+            }
+            else if (mouseDragEvent.getGestureSource() == imageCube) {
+                monitor.setObj(new Cube(20, 0.5f));
+            }
+        }
+        mouseDragEvent.consume();
     }
 
-    @FXML
-    public void setForceOnDrop() {
-
-    }
+    // Handle event: Dragging process is done on an image
+//    @FXML
+//    public void onDragDone(DragEvent dragEvent){
+//        System.out.println("DragDone");
+//        dragEvent.consume();
+//    }
 }

@@ -36,7 +36,7 @@ public class Cylinder extends Object {
     }
 
     public void setRadius(float radius) {
-        if (radius < this.MAXIMUM_THRES) {
+        if (radius <= this.MAXIMUM_THRES) {
             this.radius = radius;
             System.out.println("radius is now set to " + this.radius);
         }

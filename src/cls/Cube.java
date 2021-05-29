@@ -20,7 +20,7 @@ public class Cube extends Object {
     }
 
     public void setSizeLength(float sizeLength) {
-        if (sizeLength < this.MAXIMUM_THRES) {
+        if (sizeLength <= this.MAXIMUM_THRES) {
             this.sizeLength = sizeLength;
             System.out.println("sizeLength is now set to " + this.sizeLength);
         }
