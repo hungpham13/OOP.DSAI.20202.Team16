@@ -25,7 +25,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws Exception {
-        monitor = new Monitor(new Cube(12,12), new Surface(0.2f, 0.3f), new Force(0));
+        monitor = new Monitor(new Cube(12,0.5f), new Surface(0.2f, 0.3f), new Force(0));
         launch(args);
     }
 }
