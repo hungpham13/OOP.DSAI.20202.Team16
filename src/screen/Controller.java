@@ -121,7 +121,7 @@ public class Controller {
         //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
           //  monitor.getActorForce().setValue(t1.floatValue());});
         //display arrows
-        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow);
+        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow, fricLeftArrow, fricRightArrow, totalForceLeftArrow, totalForceRightArrow);
         arrowAnimation.start();
         }
     @FXML
