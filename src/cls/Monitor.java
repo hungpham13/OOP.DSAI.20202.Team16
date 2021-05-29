@@ -1,13 +1,6 @@
 package cls;
 
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableBooleanValue;
-import javafx.beans.value.ObservableFloatValue;
-import javafx.beans.value.ObservableValue;
-
 public class Monitor {
     private Object obj = null;
     private boolean playing = true;
@@ -23,12 +16,12 @@ public class Monitor {
         this.totalForce = actor.plus(frictionForce);
 
         //add listener for friction and total force
-        this.obj.getMassProperty().addListener(observable -> updateFrictionForce(actor));
-        this.obj.getVelocityProperty().addListener(observable ->updateFrictionForce(actor));
-        this.surface.getStaticCoefProperty().addListener(observable ->updateFrictionForce(actor));
-        this.surface.getKineticCoefProperty().addListener(observable ->updateFrictionForce(actor));
+        this.obj.getMassProperty().addListener(observable -> updateFrictionForce());
+        this.obj.getVelocityProperty().addListener(observable ->updateFrictionForce());
+        this.surface.getStaticCoefProperty().addListener(observable ->updateFrictionForce());
+        this.surface.getKineticCoefProperty().addListener(observable ->updateFrictionForce());
         this.actor.getValueProperty().addListener(observable -> {
-            updateFrictionForce(actor);
+            updateFrictionForce();
             this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue());
         });
         this.frictionForce.getValueProperty().addListener(observable -> this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue()));
@@ -59,7 +52,7 @@ public class Monitor {
         return surface;
     }
 
-    public void updateFrictionForce(Force actor) {
+    public void updateFrictionForce() {
         float normalForce = 10 * obj.getMass();
         if (obj instanceof Cube) {
             if (Math.abs(actor.getValue()) <= (normalForce * surface.getStaticFrictionCoef())) {
