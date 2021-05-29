@@ -1,44 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXSlider?>
-<?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXToggleButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.geometry.Rectangle2D?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXSlider?>
-<?import com.jfoenix.controls.JFXToggleButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
@@ -49,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -72,10 +33,10 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                            <children>
-                              <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragEntered="#onMouseDragEntered" onMouseDragExited="#onMouseDragExited" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
+                              <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragEntered="#onMouseDragEntered" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
                                  <children>
                                     <JFXSlider fx:id="sliderSize" layoutY="72.0" />
-                                    <Label layoutY="50.0" text="Size" />
+                                    <Label layoutX="10.0" layoutY="50.0" text="Size" />
                                     <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                                           <Image url="@../resources/cylinder.png" />
@@ -93,10 +54,10 @@
                                     <Insets />
                                  </VBox.margin>
                               </Pane>
-                              <Pane fx:id="paneCube" minHeight="145.0" onMouseDragEntered="#onMouseDragEntered" onMouseDragExited="#onMouseDragExited" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
+                              <Pane fx:id="paneCube" minHeight="145.0" onMouseDragEntered="#onMouseDragEntered" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                                  <children>
-                                    <TextField fx:id="tfMass" prefHeight="24.0" prefWidth="119.0" />
-                                    <Label text="Mass" />
+                                    <TextField fx:id="tfMass" layoutX="5.0" layoutY="72.0" prefHeight="26.0" prefWidth="133.0" />
+                                    <Label layoutX="10.0" layoutY="50.0" text="Mass" />
                                     <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/cube.jpg" />
@@ -166,7 +127,7 @@
          <center>
             <StackPane BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="displayPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragEntered="#onMouseDragEntered" onMouseDragExited="#onMouseDragExited" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="290.0" prefWidth="1220.0">
+                  <Pane fx:id="displayPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragEntered="#onMouseDragEntered" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="290.0" prefWidth="1220.0">
                      <children>
                         <Group fx:id="road" layoutX="-25.0" layoutY="212.0">
                            <children>
@@ -201,7 +162,7 @@
                               <Image url="@../resources/leftActor.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="standActor" fitHeight="104.0" fitWidth="117.0" layoutX="358.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="standActor" fitHeight="104.0" fitWidth="117.0" layoutX="363.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/standActor.png" />
                            </image>
@@ -252,19 +213,18 @@
                               <Rectangle2D height="50.0" minY="50.0" />
                            </viewport></ImageView>
                         <ImageView fx:id="fricRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true" />
-                        <StackPane layoutX="538.0" layoutY="90.0" prefHeight="145.0" prefWidth="145.0" />
+                        <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" layoutX="510.0" layoutY="90.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/play.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lbDropOnRoad" layoutX="355.0" layoutY="120.0" text="DROP OBJECT ON THE ROAD" textFill="#6f6f6f">
+                           <font>
+                              <Font size="29.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
-                  <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/actorArrow.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="lbDropOnRoad" text="DROP OBJECT ON THE ROAD" textFill="#6f6f6f">
-                     <font>
-                        <Font size="29.0" />
-                     </font>
-                  </Label>
                </children>
             </StackPane>
          </center>
