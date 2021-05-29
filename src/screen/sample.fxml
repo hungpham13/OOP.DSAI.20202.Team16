@@ -33,11 +33,11 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                            <children>
-                              <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragEntered="#onMouseDragEntered" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
+                              <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
                                  <children>
                                     <JFXSlider fx:id="sliderSize" layoutY="72.0" />
                                     <Label layoutX="10.0" layoutY="50.0" text="Size" />
-                                    <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                                           <Image url="@../resources/cylinder.png" />
                                        </image>
@@ -54,11 +54,11 @@
                                     <Insets />
                                  </VBox.margin>
                               </Pane>
-                              <Pane fx:id="paneCube" minHeight="145.0" onMouseDragEntered="#onMouseDragEntered" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
+                              <Pane fx:id="paneCube" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                                  <children>
                                     <TextField fx:id="tfMass" layoutX="5.0" layoutY="72.0" prefHeight="26.0" prefWidth="133.0" />
                                     <Label layoutX="10.0" layoutY="50.0" text="Mass" />
-                                    <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/cube.jpg" />
                                        </image>
@@ -127,7 +127,7 @@
          <center>
             <StackPane BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="displayPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragEntered="#onMouseDragEntered" onMouseDragOver="#onMouseDragOver" onMouseDragReleased="#onMouseDragReleased" prefHeight="290.0" prefWidth="1220.0">
+                  <Pane fx:id="displayPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragReleased="#onMouseDragReleased" prefHeight="290.0" prefWidth="1220.0">
                      <children>
                         <Group fx:id="road" layoutX="-25.0" layoutY="212.0">
                            <children>
@@ -213,7 +213,7 @@
                               <Rectangle2D height="50.0" minY="50.0" />
                            </viewport></ImageView>
                         <ImageView fx:id="fricRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true" />
-                        <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" layoutX="510.0" layoutY="90.0" onDragDetected="#onDragDetected" onDragDone="#onDragDone" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" layoutX="510.0" layoutY="90.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/play.png" />
                            </image>

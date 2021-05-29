@@ -19,11 +19,6 @@ import static screen.Main.monitor;
 
 public class Controller {
 
-    private double prevItemX;
-    private double prevItemY;
-    private double prevMouseX;
-    private double prevMouseY;
-
     @FXML
     private Pane displayPane;
 
@@ -62,9 +57,6 @@ public class Controller {
     // Image of the object on the
     @FXML
     private ImageView imageOnRoad;
-
-    @FXML
-    private ImageView supportImage;
 
     // Pane that contains Cylinder
     @FXML
@@ -125,15 +117,15 @@ public class Controller {
         lbDropOnRoad.setVisible(false);
         imageOnRoad.setVisible(false);
         // Set default size is half as large as MAXIMUM_THRES. Change size via a slider.
-        sliderSize.setMin(0);
-        sliderSize.setMax(1);
-        sliderSize.setValue(0.5);
-        sliderSize.setBlockIncrement(0.1);
+        sliderSize.setMin(5);
+        sliderSize.setMax(7);
+        sliderSize.setValue(5);
+        sliderSize.setBlockIncrement(1);
         sliderSize.setOnMouseDragged(mouseEvent -> {
             float scale = (float) sliderSize.getValue();
             System.out.println("Scale" + scale);
-            imageOnRoad.setScaleX(scale/0.5);
-            imageOnRoad.setScaleY(scale/0.5);
+            imageOnRoad.setScaleX(scale/5);
+            imageOnRoad.setScaleY(scale/5);
             imageOnRoad.setLayoutY(90 + 145 - imageOnRoad.getFitHeight());
             imageOnRoad.setLayoutX(510 + 145/2 - imageOnRoad.getFitWidth()/2);
         });
@@ -187,13 +179,12 @@ public class Controller {
     boolean dropToRoadSucceed;
 
     // Handle event: an image is pressed by mouse
-    @FXML
-    public void onMousePressed(MouseEvent mouseEvent){
-        System.out.println("Pressed");
-        ImageView obj = (ImageView) mouseEvent.getSource();
-//        prevItemX = obj.getLayoutX();prevItemY = obj.getLayoutY();prevMouseX = mouseEvent.getX();prevMouseY = mouseEvent.getY();
-        mouseEvent.consume();
-    }
+//    @FXML
+//    public void onMousePressed(MouseEvent mouseEvent){
+//        System.out.println("Pressed");
+//        ImageView obj = (ImageView) mouseEvent.getSource();
+//        mouseEvent.consume();
+//    }
 
     // Handle event: an image is dragged
     @FXML
@@ -202,6 +193,7 @@ public class Controller {
         dropToRoadSucceed = false;
         ImageView obj = (ImageView) mouseEvent.getSource();
         obj.startFullDrag();
+
         mouseEvent.consume();
     }
 
@@ -216,22 +208,21 @@ public class Controller {
         imageCube.setVisible(false);
         imageOnRoad.setVisible(false);
 
-//        double diffX = mouseEvent.getX() - prevMouseX;double diffY = mouseEvent.getY() - prevMouseY;obj.setTranslateX(obj.getTranslateX() + diffX);obj.setTranslateY(obj.getTranslateY() + diffY);
-
         mouseEvent.consume();
     }
 
     // Handle event: a dragging mouse entered above a pane.
-    @FXML
-    public void onMouseDragEntered(MouseDragEvent mouseDragEvent) {
-        System.out.println("MouseDragEntered");
-        mouseDragEvent.consume();
-    }
+//    @FXML
+//    public void onMouseDragEntered(MouseDragEvent mouseDragEvent) {
+//        System.out.println("MouseDragEntered");
+//        mouseDragEvent.consume();
+//    }
 
     // Handle event: a image is released from being dragged by the mouse
     @FXML
     public void onMouseReleased(MouseEvent mouseEvent) {
-        System.out.println("MouseRelease");
+        System.out.println("MouseReleased");
+        lbDropOnRoad.setVisible(false);
         if (dropToRoadSucceed) {
             imageOnRoad.setVisible(true);
             imageCube.setVisible(false);
@@ -246,20 +237,18 @@ public class Controller {
     }
 
     // Handle event: a dragging mouse is hovering above a pane
-    @FXML
-    public void onMouseDragOver(MouseDragEvent mouseDragEvent) {
-        if (mouseDragEvent.getTarget() == displayPane || mouseDragEvent.getTarget() == paneCube || mouseDragEvent.getTarget() == paneCylinder) {
-            System.out.println("MouseDragOver");
-        }
-        mouseDragEvent.consume();
-    }
+//    @FXML
+//    public void onMouseDragOver(MouseDragEvent mouseDragEvent) {
+//        if (mouseDragEvent.getTarget() == displayPane || mouseDragEvent.getTarget() == paneCube || mouseDragEvent.getTarget() == paneCylinder) {
+//            System.out.println("MouseDragOver");
+//        }
+//        mouseDragEvent.consume();
+//    }
 
     // Handle event: the mouse dropped an image on to a pane
     @FXML
     public void onMouseDragReleased(MouseDragEvent mouseDragEvent) throws Exception {
         System.out.println("MouseDragReleased");
-        System.out.println(mouseDragEvent.getGestureSource());
-        lbDropOnRoad.setVisible(false);
         if (mouseDragEvent.getTarget() == displayPane) {
             dropToRoadSucceed = true;
             imageOnRoad.setImage(((ImageView) mouseDragEvent.getGestureSource()).getImage());
@@ -276,11 +265,11 @@ public class Controller {
     }
 
     // Handle event: Dragging process is done on an image
-    @FXML
-    public void onDragDone(DragEvent dragEvent){
-        System.out.println("DragDone");
-        dragEvent.consume();
-    }
+//    @FXML
+//    public void onDragDone(DragEvent dragEvent){
+//        System.out.println("DragDone");
+//        dragEvent.consume();
+//    }
 
     @FXML
     public void setForceOnDrop() {
