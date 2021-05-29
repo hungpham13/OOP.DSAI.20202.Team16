@@ -27,7 +27,7 @@ public class ActorAnimation {
     public void update(float forceValue){
         //call this method when the actor force value in monitor is changed
         float duration = 10*(100-Math.abs(forceValue)) + 200;
-        if (forceValue == 0 || !Main.monitor.isPlaying()){
+        if (forceValue == 0 || !monitor.isPlaying()){
             standActor.setVisible(true);
             leftActor.setVisible(false);
             rightActor.setVisible(false);

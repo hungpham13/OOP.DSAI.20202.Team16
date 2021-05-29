@@ -1,27 +1,25 @@
 package animation;
 
 import cls.Force;
-import cls.Monitor;
 import javafx.scene.image.ImageView;
 
 public class AnimationArrow {
-    private ImageView rightArrow;
-    private ImageView leftArrow;
+    private final ImageView rightArrow;
+    private final ImageView leftArrow;
     private float oldLength;
-    private Force force;
+    private final Force force;
 
     public AnimationArrow(Force force, ImageView leftArrow, ImageView rightArrow) {
-
         this.force = force;
         this.leftArrow = leftArrow;
         this.rightArrow = rightArrow;
         this.oldLength = (float) leftArrow.getFitWidth();
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
-        force.getValueProperty().addListener((observableValue, number, t1) -> update(t1.floatValue()));
+        force.getValueProperty().addListener((observableValue, number, t1) -> update());
     }
 
-    private void update(float forceValue) {
+    private void update() {
         if (force.getValue() > 0) {
             leftArrow.setVisible(false);
             rightArrow.fitWidthProperty().setValue(force.getValue()*2);

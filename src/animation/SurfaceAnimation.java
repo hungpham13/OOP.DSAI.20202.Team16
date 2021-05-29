@@ -1,6 +1,5 @@
 package animation;
 
-import cls.Force;
 import cls.Monitor;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -13,14 +12,14 @@ public class SurfaceAnimation extends AnimationTimer {
     private final Group background;
     private final Pane displayPane;
     private final Monitor monitor;
-    private final float backgroundVelocityRate;
+    private final double backgroundVelocityRate = 0.1;
+    private final int UNIT = 260; //define pixel length of 1 meter on screen
 
-    public SurfaceAnimation(Group road, Pane displayPane, Monitor monitor, Group background, float backgroundVelocityRate) {
+    public SurfaceAnimation(Group road, Pane displayPane, Monitor monitor, Group background) {
         this.road = road;
         this.displayPane = displayPane;
         this.monitor = monitor;
         this.background = background;
-        this.backgroundVelocityRate = backgroundVelocityRate;
     }
     private void createInf(Group road){
         ImageView child2 = (ImageView) road.getChildren().get(1);
@@ -42,8 +41,8 @@ public class SurfaceAnimation extends AnimationTimer {
         if (monitor.isPlaying()){
             monitor.appliedForceToObjInTime(t);
             //*260
-            road.setLayoutX(road.getLayoutX() - t * 1 * monitor.getObj().getVelocity());
-            background.setLayoutX(background.getLayoutX() - t * backgroundVelocityRate * monitor.getObj().getVelocity());
+            road.setLayoutX(road.getLayoutX() - UNIT * t * 1 * monitor.getObj().getVelocity());
+            background.setLayoutX(background.getLayoutX() - UNIT * t * backgroundVelocityRate * monitor.getObj().getVelocity());
         }
         startNanoTime = currentNanoTime;
     }

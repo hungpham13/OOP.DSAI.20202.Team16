@@ -1,9 +1,9 @@
 package screen;
 
 import animation.*;
+import cls.Cylinder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableStringValue;
 import javafx.event.ActionEvent;
@@ -159,6 +159,10 @@ public class Controller {
         velocityLabel.textProperty().bind(formattedVelocity);
 
         //lbDropOnRoad.setVisible(false);
+        if (monitor.getObj() instanceof Cylinder) {
+            Cylinder c = (Cylinder) monitor.getObj();
+            c.getAngleProperty().addListener(observable -> imageCylinder.setRotate(c.getAngle()));
+        }
 
         //animate actor
         ActorAnimation actorAnimation = new ActorAnimation(standActor,leftActor,rightActor,Main.monitor,
@@ -186,7 +190,7 @@ public class Controller {
         });
 
         //animate surface
-        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background,0.1F);
+        SurfaceAnimation surfaceAnimation = new SurfaceAnimation(road, displayPane, Main.monitor, background);
         surfaceAnimation.start();
         //add arrows listeners
         //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {

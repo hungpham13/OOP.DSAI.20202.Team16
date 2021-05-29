@@ -88,8 +88,9 @@ public class Monitor {
         setObj(null);
         playing = true;
     }
+
     public float getObjAcceleration(){
-        return obj.getAcceleration(actor.plus(getFrictionForce()));
+        return obj.getAcceleration(totalForce);
     }
 
     public Force getFrictionForce() {
@@ -97,7 +98,6 @@ public class Monitor {
     }
 
     public void appliedForceToObjInTime(float t){
-        Force totalForce = actor.plus(getFrictionForce());
         obj.applyForce(totalForce, t);
     }
 
