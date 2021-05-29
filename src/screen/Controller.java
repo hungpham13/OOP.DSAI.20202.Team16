@@ -1,14 +1,13 @@
 package screen;
 
-import animation.ActorAnimation;
-import animation.ArrowAnimation;
-import animation.SpriteTransition;
-import animation.SurfaceAnimation;
+import animation.*;
 import cls.Object;
 import cls.Force;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableStringValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -51,7 +50,7 @@ public class Controller {
 
     @FXML
     private Group background;
-Upload an image to customize your repository’s social media preview.
+//Upload an image to customize your repository’s social media preview.
 
 
     @FXML
@@ -154,7 +153,7 @@ Upload an image to customize your repository’s social media preview.
                 monitor.getObj().getVelocityProperty());
         velocityLabel.textProperty().bind(formattedVelocity);
 
-        lbDropOnRoad.setVisible(false);
+        //lbDropOnRoad.setVisible(false);
 
         //animate actor
         ActorAnimation actorAnimation = new ActorAnimation(standActor,leftActor,rightActor,Main.monitor,
@@ -188,8 +187,11 @@ Upload an image to customize your repository’s social media preview.
         //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
           //  monitor.getActorForce().setValue(t1.floatValue());});
         //display arrows
-        ArrowAnimation arrowAnimation = new ArrowAnimation(monitor, actorLeftArrow, actorRightArrow, fricLeftArrow, fricRightArrow, totalForceLeftArrow, totalForceRightArrow);
-        arrowAnimation.start();
+        AnimationArrow actorArrowAnimation = new AnimationArrow(monitor.getActorForce(), actorLeftArrow, actorRightArrow);
+        AnimationArrow fricArrowAnimation = new AnimationArrow(monitor.getFrictionForce(), fricLeftArrow, fricRightArrow);
+        AnimationArrow totalArrowAnimation = new AnimationArrow(monitor.getTotalForce(), totalForceLeftArrow, totalForceRightArrow);
+
+        //arrowAnimation.start();
         }
     @FXML
     private JFXButton playBtn;

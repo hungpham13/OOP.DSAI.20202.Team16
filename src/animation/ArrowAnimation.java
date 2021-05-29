@@ -49,21 +49,20 @@ public class ArrowAnimation extends AnimationTimer {
             actorLeftArrow.fitHeightProperty().setValue(50);
             actorLeftArrow.setVisible(true);
         }
-        if (monitor.getFrictionForce(monitor.getActorForce()).getValue() > 0) {
+        if (monitor.getFrictionForce().getValue() > 0) {
             fricLeftArrow.setVisible(false);
-            fricRightArrow.fitWidthProperty().setValue(monitor.getFrictionForce(monitor.getActorForce()).getValue()*2);
+            fricRightArrow.fitWidthProperty().setValue(monitor.getFrictionForce().getValue()*2);
             fricRightArrow.fitHeightProperty().setValue(50);
             fricRightArrow.setVisible(true);
-        } else if (monitor.getFrictionForce(monitor.getActorForce()).getValue() < 0) {
+        } else if (monitor.getFrictionForce().getValue() < 0) {
             fricRightArrow.setVisible(false);
-            fricLeftArrow.fitWidthProperty().setValue(- monitor.getFrictionForce(monitor.getActorForce()).getValue()*2 );
+            fricLeftArrow.fitWidthProperty().setValue(- monitor.getFrictionForce().getValue()*2 );
             float chenhlech2 = oldFricLength - (float) fricLeftArrow.getFitWidth();
             fricLeftArrow.setLayoutX(fricLeftArrow.getLayoutX() + chenhlech2);
             fricLeftArrow.fitHeightProperty().setValue(50);
             fricLeftArrow.setVisible(true);
         }
-        Force totalForce = monitor.getActorForce().plus(monitor.getFrictionForce(monitor.getActorForce()));
-        System.out.println("total force: " + totalForce.getValue());
+        Force totalForce = monitor.getActorForce().plus(monitor.getFrictionForce());
         if (totalForce.getValue() > 0) {
             totalForceLeftArrow.setVisible(false);
             totalForceRightArrow.fitWidthProperty().setValue(totalForce.getValue()*2);
