@@ -93,9 +93,9 @@
                         </Label>
                         <HBox spacing="60.0">
                            <children>
-                              <JFXCheckBox fx:id="massCbox" text="Mass" />
-                              <JFXCheckBox fx:id="veloCbox" text="Velocity" />
-                              <JFXCheckBox fx:id="acceCbox" text="Acceleration" />
+                              <JFXCheckBox fx:id="massCbox" disable="true" text="Mass" />
+                              <JFXCheckBox fx:id="veloCbox" disable="true" text="Velocity" />
+                              <JFXCheckBox fx:id="acceCbox" disable="true" text="Acceleration" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -112,7 +112,7 @@
                               <Insets bottom="5.0" top="10.0" />
                            </VBox.margin>
                         </Label>
-                        <JFXSlider fx:id="forceSlider" min="-100.0" minorTickCount="1" prefHeight="38.0" prefWidth="411.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                        <JFXSlider fx:id="forceSlider" disable="true" min="-100.0" minorTickCount="1" prefHeight="38.0" prefWidth="411.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
