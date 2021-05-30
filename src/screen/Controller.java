@@ -275,6 +275,8 @@ public class Controller {
 
     // Variable control if in object is successfully dropped on to the road
     boolean dropToRoadSucceed;
+    @FXML
+    private Pane dragRecognizePane;
 
     // Handle event: an image is pressed by mouse
 //    @FXML
@@ -304,6 +306,7 @@ public class Controller {
         imageCylinder.setVisible(false);
         imageCube.setVisible(false);
         imageOnRoad.setVisible(false);
+        dragRecognizePane.setVisible(true);
 
         mouseEvent.consume();
     }
@@ -324,6 +327,7 @@ public class Controller {
             imageOnRoad.setVisible(true);
             imageCube.setVisible(false);
             imageCylinder.setVisible(false);
+            dragRecognizePane.setVisible(false);
         }
         else {
             imageCube.setVisible(true);
@@ -346,7 +350,7 @@ public class Controller {
     @FXML
     public void onMouseDragReleased(MouseDragEvent mouseDragEvent) throws Exception {
         System.out.println("MouseDragReleased");
-        if (mouseDragEvent.getTarget() == displayPane) {
+        if (mouseDragEvent.getTarget() == dragRecognizePane) {
             dropToRoadSucceed = true;
             imageOnRoad.setImage(((ImageView) mouseDragEvent.getGestureSource()).getImage());
             if (mouseDragEvent.getGestureSource() == imageCylinder) {
