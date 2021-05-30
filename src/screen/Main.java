@@ -22,7 +22,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws Exception {
-        monitor = new Monitor(new Cube(1,2), new Surface(0.2f, 0.3f), new Force(0));
+        monitor = new Monitor(new Cube(1,2), new Surface(0.3f, 0.1f), new Force(0));
         launch(args);
     }
 }

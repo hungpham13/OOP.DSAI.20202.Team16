@@ -125,7 +125,7 @@ public class Monitor {
         float normalForce = 10 * getObj().getMass();
         if (getObj() instanceof Cube) {
             if (Math.abs(actor.getValue()) <= (normalForce * surface.getStaticFrictionCoef())) {
-                if (Math.abs(getObj().getVelocity()) <= 0.2) {
+                if (Math.abs(getObj().getVelocity()) <= 0.1) {
                     getObj().setVelocity(0);
                     frictionForce.setValue(-actor.getValue());
                 } else {
@@ -136,7 +136,7 @@ public class Monitor {
             }
         } else if (getObj() instanceof Cylinder) {
             if (Math.abs(actor.getValue()) <= (3 * normalForce * surface.getStaticFrictionCoef())) {
-                if (Math.abs(getObj().getVelocity()) <= 0.2) {
+                if (Math.abs(getObj().getVelocity()) <= 0.1) {
                     getObj().setVelocity(0);
                     frictionForce.setValue(-actor.getValue() / 3);
                 } else {
