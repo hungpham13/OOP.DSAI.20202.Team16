@@ -9,10 +9,11 @@ public class ActorAnimation {
     private final ImageView leftActor;
     private final ImageView rightActor;
     private final Monitor monitor;
+    private final ImageView imageOnRoad;
     private final int[] leftActorPara;
     private final int[] rightActorPara;
 
-    public ActorAnimation(ImageView standActor, ImageView leftActor, ImageView rightActor, Monitor monitor,
+    public ActorAnimation(ImageView standActor, ImageView leftActor, ImageView rightActor, Monitor monitor, ImageView imageOnRoad,
                           int[] leftActorPara, int[] rightActorPara) {
         this.standActor = standActor;
         this.leftActor = leftActor;
@@ -20,8 +21,15 @@ public class ActorAnimation {
         this.monitor = monitor;
         this.leftActorPara = leftActorPara;
         this.rightActorPara = rightActorPara;
+        this.imageOnRoad = imageOnRoad;
 
         monitor.getActorForce().getValueProperty().addListener((observableValue, number, t1) -> update(t1.floatValue()));
+        imageOnRoad.scaleXProperty().addListener((observableValue, number, t1) -> updateX(t1.floatValue()));
+    }
+
+    private void updateX(float scale){
+        rightActor.setLayoutX(imageOnRoad.getLayoutX()+imageOnRoad.getFitWidth()*(1+(scale-1)/2));
+        leftActor.setLayoutX(imageOnRoad.getLayoutX()-imageOnRoad.getFitWidth()*(scale-1)/2-leftActorPara[1]);
     }
 
     public void update(float forceValue){

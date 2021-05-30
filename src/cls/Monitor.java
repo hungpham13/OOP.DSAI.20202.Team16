@@ -1,8 +1,11 @@
 package cls;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Monitor {
-    private Object obj = null;
+    private ObservableList<Object> objects = FXCollections.observableArrayList();
     private boolean playing = true;
     private final Surface surface;
     private final Force actor;
@@ -10,21 +13,57 @@ public class Monitor {
     private final Force totalForce;
 
     public Monitor(Object obj, Surface surface, Force actor) {
-        this.obj = obj;
         this.surface = surface;
         this.actor = actor;
         this.totalForce = actor.plus(frictionForce);
+        if (obj != null) {
+            this.objects.add(obj);
+        }
 
         //add listener for friction and total force
-        this.obj.getMassProperty().addListener(observable -> updateFrictionForce());
-        this.obj.getVelocityProperty().addListener(observable ->updateFrictionForce());
-        this.surface.getStaticCoefProperty().addListener(observable ->updateFrictionForce());
-        this.surface.getKineticCoefProperty().addListener(observable ->updateFrictionForce());
-        this.actor.getValueProperty().addListener(observable -> {
-            updateFrictionForce();
-            this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue());
-        });
-        this.frictionForce.getValueProperty().addListener(observable -> this.totalForce.setValue(this.actor.getValue()+this.frictionForce.getValue()));
+        try {
+            if (!isEmpty()) {
+                getObj().getMassProperty().addListener(observable -> {
+                    try {
+                        updateFrictionForce();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                getObj().getVelocityProperty().addListener(observable -> {
+                    try {
+                        updateFrictionForce();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+            this.surface.getStaticCoefProperty().addListener(observable -> {
+                try {
+                    updateFrictionForce();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            this.surface.getKineticCoefProperty().addListener(observable -> {
+                try {
+                    updateFrictionForce();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            this.actor.getValueProperty().addListener(observable -> {
+                try {
+                    updateFrictionForce();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                this.totalForce.setValue(this.actor.getValue() + this.frictionForce.getValue());
+            });
+            this.frictionForce.getValueProperty().addListener(observable -> this.totalForce.setValue(this.actor.getValue() + this.frictionForce.getValue()));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public boolean isPlaying() {
@@ -36,14 +75,44 @@ public class Monitor {
     }
 
     public boolean isEmpty(){
-        return obj == null;
+        return objects.isEmpty();
     }
 
-    public void setObj(Object newObj) {
-        obj = newObj;
+    public void setObj(Object newObj) throws Exception {
+        if (isEmpty() && newObj != null) {
+            objects.add(newObj);
+        } else if (newObj != null) {
+            objects.remove(0);
+            objects.add(newObj);
+        } else {
+            objects.remove(0);
+        }
+        if (!isEmpty()) {
+            getObj().getMassProperty().addListener(observable -> {
+                try {
+                    updateFrictionForce();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            getObj().getVelocityProperty().addListener(observable -> {
+                try {
+                    updateFrictionForce();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
-    public Object getObj(){
-        return obj;
+    public Object getObj() throws Exception {
+        if (!isEmpty()) {
+            return objects.get(0);
+        }else {
+            throw new Exception("Empty road");
+        }
+    }
+    public ObservableList<Object> getObjList(){
+        return objects;
     }
     public Force getActorForce(){
         return actor;
@@ -52,28 +121,30 @@ public class Monitor {
         return surface;
     }
 
-    public void updateFrictionForce() {
-        float normalForce = 10 * obj.getMass();
-        if (obj instanceof Cube) {
+    public void updateFrictionForce() throws Exception {
+        float normalForce = 10 * getObj().getMass();
+        if (getObj() instanceof Cube) {
             if (Math.abs(actor.getValue()) <= (normalForce * surface.getStaticFrictionCoef())) {
-                if (Math.round(obj.getVelocity()) == 0) {
+                if (Math.abs(getObj().getVelocity()) <= 0.2) {
+                    getObj().setVelocity(0);
                     frictionForce.setValue(-actor.getValue());
                 } else {
-                    frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
+                    frictionForce.setValue((-Math.signum(getObj().getVelocity())) * normalForce * surface.getKineticFrictionCoef());
                 }
             } else {
-                frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
+                frictionForce.setValue((-Math.signum(getObj().getVelocity())) * normalForce * surface.getKineticFrictionCoef());
             }
-        } else if (obj instanceof Cylinder) {
+        } else if (getObj() instanceof Cylinder) {
             if (Math.abs(actor.getValue()) <= (3 * normalForce * surface.getStaticFrictionCoef())) {
-                if (Math.round(obj.getVelocity()) == 0) {
+                if (Math.abs(getObj().getVelocity()) <= 0.2) {
+                    getObj().setVelocity(0);
                     frictionForce.setValue(-actor.getValue() / 3);
+                } else {
+                    frictionForce.setValue((-Math.signum(getObj().getVelocity())) * normalForce * surface.getKineticFrictionCoef());
                 }
             } else {
-                frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
+                frictionForce.setValue((-Math.signum(getObj().getVelocity())) * normalForce * surface.getKineticFrictionCoef());
             }
-        } else {
-            frictionForce.setValue((-Math.signum(obj.getVelocity())) * normalForce * surface.getKineticFrictionCoef());
         }
     }
 
@@ -83,22 +154,22 @@ public class Monitor {
     public void cont(){
         playing = true;
     }
-    public void reset(){
+    public void reset() throws Exception {
         actor.setValue(0);
         setObj(null);
         playing = true;
     }
 
-    public float getObjAcceleration(){
-        return obj.getAcceleration(totalForce);
+    public float getObjAcceleration() throws Exception {
+        return getObj().getAcceleration(totalForce);
     }
 
     public Force getFrictionForce() {
         return frictionForce;
     }
 
-    public void appliedForceToObjInTime(float t){
-        obj.applyForce(totalForce, t);
+    public void appliedForceToObjInTime(float t) throws Exception {
+        getObj().applyForce(totalForce, t);
     }
 
     public Force getTotalForce() {

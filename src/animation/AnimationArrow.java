@@ -1,6 +1,8 @@
 package animation;
 
 import cls.Force;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.image.ImageView;
 
 public class AnimationArrow {
