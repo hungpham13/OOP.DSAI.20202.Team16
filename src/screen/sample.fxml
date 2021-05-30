@@ -8,9 +8,7 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -44,7 +42,7 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                            <children>
-                              <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray; -fx-background-radius: 100;">
+                              <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0">
                                  <children>
                                     <JFXSlider fx:id="sliderSize" layoutY="72.0" />
                                     <Label layoutX="10.0" layoutY="50.0" text="Size" />
@@ -54,35 +52,20 @@
                                        </image>
                                     </ImageView>
                                  </children>
-                                 <effect>
-                                    <InnerShadow height="20.0" radius="9.5" width="20.0">
-                                       <color>
-                                          <Color red="0.3019607961177826" green="0.3019607961177826" blue="0.3019607961177826" opacity="0.5" />
-                                       </color>
-                                    </InnerShadow>
-                                 </effect>
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </Pane>
-                              <Pane fx:id="paneCube" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
+                              <Pane fx:id="paneCube" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextArea fx:id="tfMass" layoutX="5.0" layoutY="72.0" prefHeight="35.0" prefWidth="133.0" />
-                                    <TextField layoutX="5.0" layoutY="72.0" prefHeight="26.0" prefWidth="133.0" visible="false" />
-                                    <Label layoutX="10.0" layoutY="50.0" text="Mass" />
+                                    <JFXTextArea fx:id="tfMass" focusColor="#5ea840" layoutX="5.0" layoutY="72.0" prefHeight="35.0" prefWidth="133.0" unFocusColor="#4d4d4d" />
+                                    <Label layoutX="5.0" layoutY="50.0" text="Mass" />
                                     <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/cube.jpg" />
                                        </image>
                                     </ImageView>
                                  </children>
-                                 <effect>
-                                    <InnerShadow height="20.0" radius="9.5" width="20.0">
-                                       <color>
-                                          <Color red="0.3019607961177826" green="0.3019607961177826" blue="0.3019607961177826" opacity="0.5" />
-                                       </color>
-                                    </InnerShadow>
-                                 </effect>
                               </Pane>
                            </children>
                         </VBox>
@@ -104,9 +87,9 @@
                         </Label>
                         <HBox spacing="60.0">
                            <children>
-                              <JFXCheckBox fx:id="massCbox" text="Mass" />
-                              <JFXCheckBox fx:id="veloCbox" text="Velocity" />
-                              <JFXCheckBox fx:id="acceCbox" text="Acceleration" />
+                              <JFXCheckBox fx:id="massCbox" disable="true" text="Mass" />
+                              <JFXCheckBox fx:id="veloCbox" disable="true" text="Velocity" />
+                              <JFXCheckBox fx:id="acceCbox" disable="true" text="Acceleration" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -123,7 +106,7 @@
                               <Insets bottom="5.0" top="10.0" />
                            </VBox.margin>
                         </Label>
-                        <JFXSlider fx:id="forceSlider" min="-100.0" minorTickCount="1" prefHeight="38.0" prefWidth="411.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                        <JFXSlider fx:id="forceSlider" disable="true" min="-100.0" minorTickCount="1" prefHeight="38.0" prefWidth="411.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>

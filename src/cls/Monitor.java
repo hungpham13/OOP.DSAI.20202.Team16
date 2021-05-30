@@ -156,6 +156,8 @@ public class Monitor {
     }
     public void reset() throws Exception {
         actor.setValue(0);
+        frictionForce.setValue(0);
+        totalForce.setValue(0);
         setObj(null);
         playing = true;
     }

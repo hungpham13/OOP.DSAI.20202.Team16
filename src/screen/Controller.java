@@ -163,6 +163,9 @@ public class Controller {
             while (change.next()) {
                 if (change.wasAdded()) {
                     forceSlider.setDisable(false);
+                    acceCbox.setDisable(false);
+                    veloCbox.setDisable(false);
+                    massCbox.setDisable(false);
                     try {
                         //bind mass with tfMass and masslabel
                         tfMass.setText(String.valueOf(monitor.getObj().getMass()));
@@ -189,6 +192,12 @@ public class Controller {
                         JOptionPane.showMessageDialog(null,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
+                    velocityLabel.setVisible(false);
+                    accelerationLabel.setVisible(false);
+                    massLabel.setVisible(false);
+                    veloCbox.setDisable(true);
+                    massCbox.setDisable(true);
+                    acceCbox.setDisable(true);
                     forceSlider.setDisable(true);
                 }
             }
@@ -269,6 +278,13 @@ public class Controller {
     public void resetPressedBtn(ActionEvent e) throws Exception {
         Main.monitor.reset();
         forceSlider.setValue(0);
+        imageOnRoad.setRotate(0);
+        imageOnRoad.setScaleX(1);
+        imageOnRoad.setScaleY(1);
+        imageOnRoad.setVisible(false);
+        imageCube.setVisible(true);
+        imageCylinder.setVisible(true);
+
         playBtn.setDisable(true);
         pauseBtn.setDisable(false);
     }
@@ -327,13 +343,13 @@ public class Controller {
             imageOnRoad.setVisible(true);
             imageCube.setVisible(false);
             imageCylinder.setVisible(false);
-            dragRecognizePane.setVisible(false);
         }
         else {
             imageCube.setVisible(true);
             imageCylinder.setVisible(true);
             imageOnRoad.setVisible(false);
         }
+        dragRecognizePane.setVisible(false);
         mouseEvent.consume();
     }
 
@@ -362,8 +378,10 @@ public class Controller {
             else if (mouseDragEvent.getGestureSource() == imageCube) {
                 monitor.setObj(new Cube(20, 0.5f));
             }
+        } else {
+            resetPressedBtn(new ActionEvent());
         }
-        mouseDragEvent.consume();
+            mouseDragEvent.consume();
     }
 
     // Handle event: Dragging process is done on an image
