@@ -2,17 +2,12 @@ package screen;
 
 import animation.*;
 import cls.Cylinder;
-import animation.*;
 import cls.Cube;
-import cls.Cylinder;
 import cls.Object;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.*;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableStringValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,7 +56,7 @@ public class Controller {
 
     // Text Input to change mass of object
     @FXML
-    private TextField tfMass;
+    private JFXTextArea tfMass;
 
     // Image of Cube
     @FXML
@@ -89,19 +84,14 @@ public class Controller {
 
     @FXML
     private ImageView actorRightArrow;
-
     @FXML
     private ImageView actorLeftArrow;
-
     @FXML
     private ImageView fricRightArrow;
-
     @FXML
     private ImageView fricLeftArrow;
-
     @FXML
     private ImageView totalForceLeftArrow;
-
     @FXML
     private ImageView totalForceRightArrow;
 
@@ -115,7 +105,21 @@ public class Controller {
     private Label frictionForceLabel;
     @FXML
     private Label totalForceLabel;
+    @FXML
+    private Label massLabel;
 
+    @FXML
+    private JFXCheckBox massCbox;
+    @FXML
+    private JFXCheckBox veloCbox;
+    @FXML
+    private JFXCheckBox acceCbox;
+    @FXML
+    private JFXCheckBox arrowForceCbox;
+    @FXML
+    private JFXCheckBox valueForceCbox;
+    @FXML
+    private JFXCheckBox sumForceCbox;
 
     @FXML
     private void initialize() throws Exception {
@@ -136,36 +140,56 @@ public class Controller {
                         "Actor Force: " + monitor.getActorForce().getValue() + " N",
                 monitor.getActorForce().getValueProperty());
         forceValueLabel.textProperty().bind(formattedForceValue);
+        forceValueLabel.visibleProperty().bindBidirectional(valueForceCbox.selectedProperty());
         //bind force value with label
         ObservableStringValue formattedTotal = Bindings.createStringBinding(() ->
                         "Total Force: " + monitor.getTotalForce().getValue() + " N",
                 monitor.getTotalForce().getValueProperty());
         totalForceLabel.textProperty().bind(formattedTotal);
+
+        ObservableBooleanValue isTotal = Bindings.createBooleanBinding(() ->
+                        valueForceCbox.isSelected() && sumForceCbox.isSelected(),
+        valueForceCbox.selectedProperty(),sumForceCbox.selectedProperty());
+        totalForceLabel.visibleProperty().bind(isTotal);
+
         //bind force value with label
         ObservableStringValue formattedFriction = Bindings.createStringBinding(() ->
                         "Friction Force: " + monitor.getFrictionForce().getValue() + " N",
                 monitor.getFrictionForce().getValueProperty());
         frictionForceLabel.textProperty().bind(formattedFriction);
+        frictionForceLabel.visibleProperty().bindBidirectional(valueForceCbox.selectedProperty());
 
         monitor.getObjList().addListener((ListChangeListener<Object>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
-                    //bind acceleration with label
+                    forceSlider.setDisable(false);
                     try {
+                        //bind mass with tfMass and masslabel
                         tfMass.setText(String.valueOf(monitor.getObj().getMass()));
+                        ObservableStringValue formattedMass = Bindings.createStringBinding(() ->
+                                        monitor.getObj().getMass() + " kg",
+                                monitor.getObj().getMassProperty());
+                        massLabel.textProperty().bind(formattedMass);
+                        massLabel.visibleProperty().bindBidirectional(massCbox.selectedProperty());
+
+                        //bind acceleration with label
                         ObservableStringValue formattedAcceleration = Bindings.createStringBinding(() ->
-                                        "Acceleration: " + monitor.getObjAcceleration() + " m/s2",
+                                        "Acceleration: " + String.format("%.2g",monitor.getObjAcceleration()) + " m/s2",
                                 monitor.getObj().getMassProperty(), monitor.getActorForce().getValueProperty());
                         accelerationLabel.textProperty().bind(formattedAcceleration);
+                        accelerationLabel.visibleProperty().bindBidirectional(acceCbox.selectedProperty());
 
                         //bind velocity with label
                         ObservableStringValue formattedVelocity = Bindings.createStringBinding(() ->
-                                        "Velocity: " + monitor.getObj().getVelocity() + " m/s",
+                                        "Velocity: " + String.format("%.2g",monitor.getObj().getVelocity()) + " m/s",
                                 monitor.getObj().getVelocityProperty());
                         velocityLabel.textProperty().bind(formattedVelocity);
+                        velocityLabel.visibleProperty().bindBidirectional(veloCbox.selectedProperty());
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
                     }
+                } else {
+                    forceSlider.setDisable(true);
                 }
             }
         });
@@ -181,6 +205,9 @@ public class Controller {
         //add listener to surface coefficient slider
         kineticSlider.valueProperty().bindBidirectional(monitor.getSurface().getKineticCoefProperty());
         staticSlider.valueProperty().bindBidirectional(monitor.getSurface().getStaticCoefProperty());
+        kineticSlider.maxProperty().bind(staticSlider.valueProperty());
+        kineticSlider.majorTickUnitProperty().bind(Bindings.createDoubleBinding(()->kineticSlider.getMax()/2,
+                kineticSlider.maxProperty()));
 
         // Set default size is half as large as MAXIMUM_THRES. Change size via a slider.
         sliderSize.setMin(5);
@@ -212,9 +239,12 @@ public class Controller {
         //forceSlider.valueProperty().addListener((observableValue, number, t1) -> {
         //  monitor.getActorForce().setValue(t1.floatValue());});
         //display arrows
-        AnimationArrow actorArrowAnimation = new AnimationArrow(monitor.getActorForce(), actorLeftArrow, actorRightArrow);
-        AnimationArrow fricArrowAnimation = new AnimationArrow(monitor.getFrictionForce(), fricLeftArrow, fricRightArrow);
-        AnimationArrow totalArrowAnimation = new AnimationArrow(monitor.getTotalForce(), totalForceLeftArrow, totalForceRightArrow);
+        AnimationArrow actorArrowAnimation = new AnimationArrow(monitor.getActorForce(), actorLeftArrow,
+                actorRightArrow,imageOnRoad, arrowForceCbox.selectedProperty());
+        AnimationArrow fricArrowAnimation = new AnimationArrow(monitor.getFrictionForce(), fricLeftArrow,
+                fricRightArrow, imageOnRoad, arrowForceCbox.selectedProperty());
+        AnimationArrow totalArrowAnimation = new AnimationArrow(monitor.getTotalForce(), totalForceLeftArrow,
+                totalForceRightArrow, imageOnRoad, sumForceCbox.selectedProperty());
     }
     @FXML
     private JFXButton playBtn;
@@ -261,7 +291,6 @@ public class Controller {
         dropToRoadSucceed = false;
         ImageView obj = (ImageView) mouseEvent.getSource();
         obj.startFullDrag();
-
         mouseEvent.consume();
     }
 
@@ -323,7 +352,8 @@ public class Controller {
             if (mouseDragEvent.getGestureSource() == imageCylinder) {
                 Cylinder c = new Cylinder(20, 0.5f);
                 monitor.setObj(c);
-                c.getAngleProperty().addListener(observable -> imageOnRoad.setRotate(c.getAngle())); // set image on the road as rotatable
+                c.getAngleProperty().addListener(observable -> imageOnRoad.setRotate(2 * c.getAngle())); // set image on
+                // the road as rotatable
             }
             else if (mouseDragEvent.getGestureSource() == imageCube) {
                 monitor.setObj(new Cube(20, 0.5f));

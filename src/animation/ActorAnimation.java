@@ -22,6 +22,7 @@ public class ActorAnimation {
         this.leftActorPara = leftActorPara;
         this.rightActorPara = rightActorPara;
         this.imageOnRoad = imageOnRoad;
+        updateX((float) imageOnRoad.getScaleX());
 
         monitor.getActorForce().getValueProperty().addListener((observableValue, number, t1) -> update(t1.floatValue()));
         imageOnRoad.scaleXProperty().addListener((observableValue, number, t1) -> updateX(t1.floatValue()));

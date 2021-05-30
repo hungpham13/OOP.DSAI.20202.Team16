@@ -6,9 +6,9 @@ public class Surface {
     private SimpleFloatProperty staticCoef = new SimpleFloatProperty();
     private SimpleFloatProperty kineticCoef = new SimpleFloatProperty();
 
-    public Surface(float staticCoef, float kineticCoef) {
-        this.staticCoef.setValue(staticCoef);
-        this.kineticCoef.setValue(kineticCoef);
+    public Surface(float staticCoef, float kineticCoef) throws Exception {
+        setStaticFrictionCoef(staticCoef);
+        setKineticFrictionCoef(kineticCoef);
     }
 
     public SimpleFloatProperty getStaticCoefProperty() {
@@ -36,10 +36,10 @@ public class Surface {
     }
 
     public void setKineticFrictionCoef(float kineticCoef) throws Exception {
-        if (0 <= kineticCoef && kineticCoef<=1) {
+        if (0 <= kineticCoef && kineticCoef<=getStaticFrictionCoef()) {
             this.kineticCoef.setValue(kineticCoef);
         } else {
-            throw new Exception("The coefficient must be between 0 and 1");
+            throw new Exception("The coefficient must be between 0 and the value of static friction coefficient: "+getStaticFrictionCoef());
         }
     }
 }

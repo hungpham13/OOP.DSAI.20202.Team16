@@ -13,7 +13,7 @@ public class SurfaceAnimation extends AnimationTimer {
     private final Pane displayPane;
     private final Monitor monitor;
     private static final double backgroundVelocityRate = 0.1;
-    private static final int UNIT = 10; //define pixel length of 1 meter on screen
+    public static final int UNIT = 12; //define pixel length of 1 meter on screen
 
     public SurfaceAnimation(Group road, Pane displayPane, Monitor monitor, Group background) {
         this.road = road;
@@ -52,6 +52,8 @@ public class SurfaceAnimation extends AnimationTimer {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            System.out.println("NotPlaying");
         }
         startNanoTime = currentNanoTime;
     }

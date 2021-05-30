@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="screen.Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -56,7 +67,8 @@
                               </Pane>
                               <Pane fx:id="paneCube" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                                  <children>
-                                    <TextField fx:id="tfMass" layoutX="5.0" layoutY="72.0" prefHeight="26.0" prefWidth="133.0" />
+                                    <JFXTextArea fx:id="tfMass" layoutX="5.0" layoutY="72.0" prefHeight="35.0" prefWidth="133.0" />
+                                    <TextField layoutX="5.0" layoutY="72.0" prefHeight="26.0" prefWidth="133.0" visible="false" />
                                     <Label layoutX="10.0" layoutY="50.0" text="Mass" />
                                     <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -78,26 +90,6 @@
                   </StackPane>
                </center>
             </BorderPane>
-            <Pane layoutX="41.0" layoutY="41.0" prefWidth="360.0" style="-fx-background-color: white;">
-               <effect>
-                  <DropShadow blurType="GAUSSIAN" height="30.0" offsetY="10.0" radius="14.5" width="30.0">
-                     <color>
-                        <Color red="0.3100000023841858" green="0.3100000023841858" blue="0.3100000023841858" opacity="0.5" />
-                     </color>
-                  </DropShadow>
-               </effect>
-               <HBox.margin>
-                  <Insets bottom="30.0" right="30.0" top="30.0" />
-               </HBox.margin>
-               <children>
-                  <Slider blockIncrement="0.1" layoutX="83.0" layoutY="264.0" majorTickUnit="0.5" max="1.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.5" />
-                  <Label fx:id="forceValueLabel" layoutX="135.0" layoutY="159.0" text="Label" />
-                  <Label fx:id="accelerationLabel" layoutX="135.0" layoutY="192.0" text="Label" />
-                  <Label fx:id="velocityLabel" layoutX="135.0" layoutY="221.0" text="Label" />
-                  <Label fx:id="frictionForceLabel" layoutX="135.0" layoutY="127.0" text="Label" />
-                  <Label fx:id="totalForceLabel" layoutX="135.0" layoutY="91.0" text="Label" />
-               </children>
-            </Pane>
             <BorderPane prefHeight="350.0" prefWidth="465.0" style="-fx-background-color: white;">
                <center>
                   <VBox prefHeight="350.0" prefWidth="452.0" BorderPane.alignment="CENTER">
@@ -112,9 +104,9 @@
                         </Label>
                         <HBox spacing="60.0">
                            <children>
-                              <JFXCheckBox text="Mass" />
-                              <JFXCheckBox text="Velocity" />
-                              <JFXCheckBox text="Acceleration" />
+                              <JFXCheckBox fx:id="massCbox" text="Mass" />
+                              <JFXCheckBox fx:id="veloCbox" text="Velocity" />
+                              <JFXCheckBox fx:id="acceCbox" text="Acceleration" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -138,9 +130,9 @@
                         </JFXSlider>
                         <HBox layoutX="40.0" layoutY="71.0" spacing="60.0">
                            <children>
-                              <JFXCheckBox text="Arrows" />
-                              <JFXCheckBox layoutX="20.0" layoutY="20.0" text="Values" />
-                              <JFXCheckBox layoutX="335.0" layoutY="20.0" text="Sum of Forces" />
+                              <JFXCheckBox fx:id="arrowForceCbox" text="Arrows" />
+                              <JFXCheckBox fx:id="valueForceCbox" layoutX="20.0" layoutY="20.0" text="Values" />
+                              <JFXCheckBox fx:id="sumForceCbox" layoutX="335.0" layoutY="20.0" text="Sum of Forces" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
@@ -157,7 +149,7 @@
                         <HBox spacing="38.0">
                            <children>
                               <Label text="Static friction coefficient" />
-                              <JFXSlider fx:id="staticSlider" blockIncrement="0.1" majorTickUnit="0.5" max="1.0" prefHeight="16.0" prefWidth="197.0" showTickLabels="true" showTickMarks="true" />
+                              <JFXSlider fx:id="staticSlider" blockIncrement="0.1" majorTickUnit="0.5" max="1.0" prefHeight="16.0" prefWidth="197.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -166,7 +158,7 @@
                         <HBox layoutX="40.0" layoutY="297.0" spacing="30.0">
                            <children>
                               <Label text="Kinetic friction coefficient" />
-                              <JFXSlider fx:id="kineticSlider" blockIncrement="0.1" majorTickUnit="0.5" max="1.0" prefHeight="16.0" prefWidth="197.0" showTickLabels="true" showTickMarks="true" />
+                              <JFXSlider fx:id="kineticSlider" blockIncrement="0.1" majorTickUnit="0.5" max="1.0" minWidth="0.0" prefHeight="16.0" prefWidth="197.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                            </children>
                         </HBox>
                      </children>
@@ -252,21 +244,31 @@
                         <JFXButton fx:id="playBtn" buttonType="RAISED" defaultButton="true" layoutX="1070.0" layoutY="25.0" onAction="#playPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/play.png);" />
                         <JFXButton fx:id="pauseBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="1145.0" layoutY="25.0" onAction="#pausePressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/pause.png);" />
                         <JFXButton fx:id="resetBtn" buttonType="RAISED" graphicTextGap="0.0" layoutX="30.0" layoutY="25.0" onAction="#resetPressedBtn" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffffffb2" style="-fx-background-image: url(resources/reset.png);" />
-                        <ImageView fx:id="totalForceRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="89.0" pickOnBounds="true">
+                        <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" layoutX="510.0" layoutY="90.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
-                              <Image url="@../resources/actorArrow.png" />
+                              <Image url="@../resources/play.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lbDropOnRoad" layoutX="510.0" layoutY="150.0" text="Drop here" textFill="#6f6f6f" visible="false">
+                           <font>
+                              <Font size="29.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="totalForceRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="582.0" layoutY="80.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/sumArrow.png" />
                            </image>
                            <viewport>
                               <Rectangle2D height="50.0" minY="50.0" />
                            </viewport></ImageView>
-                        <ImageView fx:id="totalForceLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="89.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
+                        <ImageView fx:id="totalForceLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="382.0" layoutY="80.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
                            <viewport>
                               <Rectangle2D height="50.0" minY="50.0" />
                            </viewport>
                            <image>
-                              <Image url="@../resources/actorArrow.png" />
+                              <Image url="@../resources/sumArrow.png" />
                            </image></ImageView>
-                        <ImageView fx:id="actorLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="144.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
+                        <ImageView fx:id="actorLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="382.0" layoutY="140.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
                            <viewport>
                               <Rectangle2D height="50.0" minY="50.0" />
                            </viewport>
@@ -274,7 +276,7 @@
                               <Image url="@../resources/actorArrow.png" />
                            </image>
                            </ImageView>
-                        <ImageView fx:id="actorRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true">
+                        <ImageView fx:id="actorRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="582.0" layoutY="140.0" pickOnBounds="true">
                            <viewport>
                               <Rectangle2D height="50.0" minY="50.0" />
                            </viewport>
@@ -282,23 +284,30 @@
                               <Image url="@../resources/actorArrow.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="fricLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="228.0" layoutY="144.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
+                        <ImageView fx:id="fricLeftArrow" fitHeight="50.0" fitWidth="200.0" layoutX="382.0" layoutY="210.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/actorArrow.png" />
+                              <Image url="@../resources/frictionArrow.png" />
                            </image>
                            <viewport>
                               <Rectangle2D height="50.0" minY="50.0" />
                            </viewport></ImageView>
-                        <ImageView fx:id="fricRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="428.0" layoutY="144.0" pickOnBounds="true" />
-                        <ImageView fx:id="imageOnRoad" fitHeight="145.0" fitWidth="145.0" layoutX="510.0" layoutY="90.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fx:id="fricRightArrow" fitHeight="50.0" fitWidth="200.0" layoutX="582.0" layoutY="210.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../resources/play.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="lbDropOnRoad" layoutX="355.0" layoutY="120.0" text="DROP OBJECT ON THE ROAD" textFill="#6f6f6f" visible="false">
-                           <font>
-                              <Font size="29.0" />
-                           </font>
+                              <Image url="@../resources/frictionArrow.png" />
+                           </image></ImageView>
+                        <Label fx:id="totalForceLabel" layoutX="818.0" layoutY="90.0" text="Label" />
+                        <Label fx:id="frictionForceLabel" layoutX="818.0" layoutY="172.0" text="Label" />
+                        <Label fx:id="forceValueLabel" layoutX="818.0" layoutY="142.0" text="Label" />
+                        <HBox alignment="CENTER" layoutX="237.0" layoutY="241.0" prefHeight="25.0" prefWidth="692.0" spacing="30.0">
+                           <children>
+                              <Label fx:id="accelerationLabel" text="Label" visible="false" />
+                              <Label fx:id="velocityLabel" text="Label" visible="false" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="massLabel" layoutX="558.0" layoutY="180.0" style="-fx-background-color: white; -fx-border-color: gray;" text="Label" visible="false">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
                         </Label>
                      </children>
                   </Pane>
