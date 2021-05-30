@@ -336,7 +336,7 @@ public class Controller {
 
     // Handle event: a image is released from being dragged by the mouse
     @FXML
-    public void onMouseReleased(MouseEvent mouseEvent) {
+    public void onMouseReleased(MouseEvent mouseEvent) throws Exception {
         System.out.println("MouseReleased");
         lbDropOnRoad.setVisible(false);
         if (dropToRoadSucceed) {
@@ -348,6 +348,7 @@ public class Controller {
             imageCube.setVisible(true);
             imageCylinder.setVisible(true);
             imageOnRoad.setVisible(false);
+            resetPressedBtn(new ActionEvent());
         }
         dragRecognizePane.setVisible(false);
         mouseEvent.consume();
@@ -378,10 +379,8 @@ public class Controller {
             else if (mouseDragEvent.getGestureSource() == imageCube) {
                 monitor.setObj(new Cube(20, 0.5f));
             }
-        } else {
-            resetPressedBtn(new ActionEvent());
         }
-            mouseDragEvent.consume();
+        mouseDragEvent.consume();
     }
 
     // Handle event: Dragging process is done on an image

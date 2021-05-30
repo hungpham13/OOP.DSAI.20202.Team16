@@ -23,7 +23,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane prefHeight="238.0" prefWidth="185.0" style="-fx-background-color: white;">
+            <BorderPane prefHeight="340.0" prefWidth="408.0" style="-fx-background-color: white;">
                <HBox.margin>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </HBox.margin>
@@ -35,38 +35,44 @@
                   </DropShadow>
                </effect>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
                </padding>
                <center>
                   <StackPane BorderPane.alignment="CENTER">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                            <children>
-                              <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0">
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <JFXSlider fx:id="sliderSize" layoutY="72.0" />
-                                    <Label layoutX="10.0" layoutY="50.0" text="Size" />
-                                    <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                                          <Image url="@../resources/cylinder.png" />
-                                       </image>
-                                    </ImageView>
+                                    <Pane fx:id="paneCylinder" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 100;">
+                                       <children>
+                                          <JFXSlider fx:id="sliderSize" layoutY="72.0" />
+                                          <Label layoutX="10.0" layoutY="50.0" text="Size" />
+                                          <ImageView fx:id="imageCylinder" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                                <Image url="@../resources/cylinder.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </Pane>
+                                    <Pane fx:id="paneCube" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="145.0" prefWidth="144.0">
+                                       <children>
+                                          <JFXTextArea fx:id="tfMass" focusColor="#40a841" layoutX="5.0" layoutY="72.0" prefHeight="35.0" prefWidth="133.0" />
+                                          <Label layoutX="10.0" layoutY="50.0" text="Mass" />
+                                          <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../resources/cube.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </Pane>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Pane>
-                              <Pane fx:id="paneCube" minHeight="145.0" onMouseDragReleased="#onMouseDragReleased" prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <JFXTextArea fx:id="tfMass" focusColor="#5ea840" layoutX="5.0" layoutY="72.0" prefHeight="35.0" prefWidth="133.0" unFocusColor="#4d4d4d" />
-                                    <Label layoutX="5.0" layoutY="50.0" text="Mass" />
-                                    <ImageView fx:id="imageCube" fitHeight="145.0" fitWidth="145.0" onDragDetected="#onDragDetected" onMouseDragged="#onMouseDragged" onMouseReleased="#onMouseReleased" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/cube.jpg" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Pane>
+                              </HBox>
+                              <Label style="-fx-background-color: white;" text="Drag object to setup">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
                            </children>
                         </VBox>
                      </children>
@@ -87,9 +93,9 @@
                         </Label>
                         <HBox spacing="60.0">
                            <children>
-                              <JFXCheckBox fx:id="massCbox" disable="true" text="Mass" />
-                              <JFXCheckBox fx:id="veloCbox" disable="true" text="Velocity" />
-                              <JFXCheckBox fx:id="acceCbox" disable="true" text="Acceleration" />
+                              <JFXCheckBox fx:id="massCbox" text="Mass" />
+                              <JFXCheckBox fx:id="veloCbox" text="Velocity" />
+                              <JFXCheckBox fx:id="acceCbox" text="Acceleration" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -106,7 +112,7 @@
                               <Insets bottom="5.0" top="10.0" />
                            </VBox.margin>
                         </Label>
-                        <JFXSlider fx:id="forceSlider" disable="true" min="-100.0" minorTickCount="1" prefHeight="38.0" prefWidth="411.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                        <JFXSlider fx:id="forceSlider" min="-100.0" minorTickCount="1" prefHeight="38.0" prefWidth="411.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
