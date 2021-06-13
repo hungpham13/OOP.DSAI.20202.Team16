@@ -1,6 +1,6 @@
 package animation;
 
-import cls.Monitor;
+import base.Monitor;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;

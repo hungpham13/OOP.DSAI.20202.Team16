@@ -1,4 +1,4 @@
-package cls;
+package base;
 
 import javafx.beans.property.SimpleFloatProperty;
 

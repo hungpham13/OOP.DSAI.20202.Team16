@@ -1,6 +1,6 @@
 package animation;
 
-import cls.Monitor;
+import base.Monitor;
 import javafx.scene.image.ImageView;
 import screen.Main;
 

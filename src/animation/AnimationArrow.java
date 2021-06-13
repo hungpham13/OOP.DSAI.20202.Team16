@@ -1,6 +1,6 @@
 package animation;
 
-import cls.Force;
+import base.Force;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.image.ImageView;
 

@@ -1,6 +1,6 @@
 package animation;
 
-import cls.Monitor;
+import base.Monitor;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;

@@ -1,9 +1,9 @@
 package screen;
 
 import animation.*;
-import cls.Cylinder;
-import cls.Cube;
-import cls.Object;
+import base.Cylinder;
+import base.Cube;
+import base.Object;
 import com.jfoenix.controls.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableBooleanValue;
@@ -165,6 +165,8 @@ public class Controller {
                     forceSlider.setDisable(false);
                     acceCbox.setDisable(false);
                     veloCbox.setDisable(false);
+                    sliderSize.setValue(5);
+                    imageOnRoad.setLayoutY(90);
                     massCbox.setDisable(false);
                     try {
                         //bind mass with tfMass and masslabel

@@ -1,8 +1,6 @@
-package cls;
+package base;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.value.ObservableFloatValue;
 
 public abstract class Object {
 

@@ -1,4 +1,4 @@
-package cls;
+package base;
 
 public class Cube extends Object {
 
