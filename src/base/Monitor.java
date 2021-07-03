@@ -5,16 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Monitor {
-    private ObservableList<Object> objects = FXCollections.observableArrayList();
+    private final ObservableList<Object> objects = FXCollections.observableArrayList();
     private boolean playing = true;
     private final Surface surface;
     private final Force actor;
-    private final FrictionForce frictionForce = new FrictionForce(0, this);
+    private final FrictionForce frictionForce;
     private final Force totalForce;
 
     public Monitor(Object obj, Surface surface, Force actor) {
         this.surface = surface;
         this.actor = actor;
+        this.frictionForce = new FrictionForce(0, this);
         this.totalForce = actor.plus(frictionForce);
         if (obj != null) {
             this.objects.add(obj);
